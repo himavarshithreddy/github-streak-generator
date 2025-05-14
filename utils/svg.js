@@ -1,7 +1,7 @@
 export function renderStreakSVG({
   currentStreak, currentStreakStart, currentStreakEnd,
   longestStreak, longestStreakStart, longestStreakEnd,
-  totalContributions
+  totalContributions, firstContributionDate
 }) {
   // Format dates if they exist
   const formatDate = (dateStr) => {
@@ -10,8 +10,11 @@ export function renderStreakSVG({
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
-  // For total contributions, we should use "All time" since we don't have the first contribution date
-  const totalContributionsDates = "All time";
+  // For total contributions, use firstContributionDate if available, otherwise fall back to earliest streak date
+  const earliestDate = firstContributionDate || [currentStreakStart, longestStreakStart].filter(Boolean).sort()[0];
+  const totalContributionsDates = earliestDate 
+    ? `${formatDate(earliestDate)} → ${formatDate(new Date())}`
+    : 'All time';
 
   const currentStreakDates = currentStreak > 0
     ? `${formatDate(currentStreakStart)} → ${formatDate(currentStreakEnd)}`
@@ -30,7 +33,7 @@ export function renderStreakSVG({
     .label { font: 500 9px ui-monospace, SFMono-Regular, monospace; fill: #A2A0B3; }
     .sublabel { font: 400 8px ui-monospace, SFMono-Regular, monospace; fill: #6E6C7E; }
     .value { font: 700 22px ui-monospace, SFMono-Regular, monospace; fill: #E2E1E8; }
-    .unit { font: 370 8px ui-monospace, SFMono-Regular, monospace; fill: #6E6C7E; }
+    .unit { font: 400 8px ui-monospace, SFMono-Regular, monospace; fill: #6E6C7E; }
     .total { fill: #66BB6A; }
     .current { fill: #FF7043; }
     .longest { fill: #FFD54F; }
