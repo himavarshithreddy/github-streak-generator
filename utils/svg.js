@@ -10,11 +10,8 @@ export function renderStreakSVG({
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
-  // For total contributions, use the earliest date we have to current date
-  const earliestDate = [currentStreakStart, longestStreakStart].filter(Boolean).sort()[0];
-  const totalContributionsDates = earliestDate 
-    ? `${formatDate(earliestDate)} → ${formatDate(currentStreakEnd || new Date())}`
-    : 'All time';
+  // For total contributions, we should use "All time" since we don't have the first contribution date
+  const totalContributionsDates = "All time";
 
   const currentStreakDates = currentStreak > 0
     ? `${formatDate(currentStreakStart)} → ${formatDate(currentStreakEnd)}`
@@ -71,7 +68,7 @@ export function renderStreakSVG({
   <text x="200" y="118" class="label" text-anchor="middle">Current Streak</text>
   <text x="200" y="132" class="sublabel" text-anchor="middle" textLength="110" lengthAdjust="spacingAndGlyphs">${currentStreakDates}</text>
   <text x="333" y="118" class="label" text-anchor="middle">Longest Streak</text>
-  <text x="325" y="132" class="sublabel" text-anchor="middle" textLength="100" lengthAdjust="spacingAndGlyphs">${longestStreakDates}</text>
+  <text x="335" y="132" class="sublabel" text-anchor="middle" textLength="100" lengthAdjust="spacingAndGlyphs">${longestStreakDates}</text>
 </svg>
   `;
 }
