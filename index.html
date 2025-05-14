@@ -6,20 +6,28 @@
     <title>GitHub Streak README Widget</title>
     <style>
         :root {
-            --bg-dark: #0d1117;
-            --bg-card: #161b22;
-            --border-color: #30363d;
-            --text-primary: #c9d1d9;
-            --text-secondary: #8b949e;
-            --text-accent: #58a6ff;
-            --btn-primary: #238636;
-            --btn-primary-hover: #2ea043;
-            --btn-secondary: #21262d;
-            --btn-secondary-hover: #30363d;
-            --btn-blue: #1f6feb;
-            --btn-blue-hover: #388bfd;
-            --header-bg: #161b22;
-            --tooltip-bg: #393e46;
+            --bg-dark: #1E1E1E;
+            --bg-card: #252526;
+            --border-color: #3E3E42;
+            --text-primary: #D4D4D4;
+            --text-secondary: #9CDCFE;
+            --text-accent: #569CD6;
+            --text-emphasis: #DCDCAA;
+            --btn-primary: #388E3C;
+            --btn-primary-hover: #43A047;
+            --btn-secondary: #303030;
+            --btn-secondary-hover: #3E3E42;
+            --btn-blue: #0E639C;
+            --btn-blue-hover: #1177BB;
+            --header-bg: #252526;
+            --tooltip-bg: #3E3E42;
+            --code-keyword: #569CD6;
+            --code-string: #CE9178;
+            --code-comment: #6A9955;
+            --code-function: #DCDCAA;
+            --code-number: #B5CEA8;
+            --error-color: #F44747;
+            --success-color: #6A9955;
         }
         
         * {
@@ -28,7 +36,7 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            font-family: 'Consolas', 'Courier New', monospace;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -37,6 +45,7 @@
             margin: 0;
             background-color: var(--bg-dark);
             color: var(--text-primary);
+            line-height: 1.6;
         }
         
         .header {
@@ -59,21 +68,28 @@
         
         .logo {
             margin-right: 16px;
+            color: var(--text-emphasis);
+        }
+        
+        h1 {
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: var(--text-accent);
         }
         
         .container {
             background-color: var(--bg-card);
             border-radius: 6px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
             margin: 0 auto 40px;
             width: 100%;
             max-width: 800px;
             padding: 2px;
             overflow: hidden;
+            border: 1px solid var(--border-color);
         }
         
         .card-header {
-            background-color: rgba(13, 17, 23, 0.3);
+            background-color: #1E1E1E;
             padding: 16px 24px;
             border-bottom: 1px solid var(--border-color);
             border-top-left-radius: 6px;
@@ -114,7 +130,7 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: var(--text-primary);
+            color: var(--text-secondary);
         }
         
         .input-wrapper {
@@ -127,8 +143,9 @@
             padding: 10px 12px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            background-color: var(--bg-dark);
+            background-color: #1E1E1E;
             color: var(--text-primary);
+            font-family: 'Consolas', 'Courier New', monospace;
             font-size: 14px;
             line-height: 20px;
         }
@@ -137,7 +154,7 @@
         input[type="date"]:focus {
             outline: none;
             border-color: var(--text-accent);
-            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
+            box-shadow: 0 0 0 3px rgba(86, 156, 214, 0.3);
         }
         
         .input-tooltip {
@@ -208,6 +225,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.2s;
+            font-family: 'Consolas', 'Courier New', monospace;
         }
         
         button svg {
@@ -245,6 +263,7 @@
             margin-top: 40px;
             display: none;
             width: 100%;
+            max-width: 800px;
         }
         
         .results-layout {
@@ -261,13 +280,14 @@
         }
         
         .output-header {
-            background-color: rgba(13, 17, 23, 0.3);
+            background-color: #1E1E1E;
             padding: 12px 16px;
             border-bottom: 1px solid var(--border-color);
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: var(--text-secondary);
         }
         
         .output-content {
@@ -275,24 +295,24 @@
         }
         
         .markdown-output {
-            background-color: var(--bg-dark);
+            background-color: #1E1E1E;
             padding: 16px;
             border-radius: 6px;
             border: 1px solid var(--border-color);
-            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+            font-family: 'Consolas', 'Courier New', monospace;
             font-size: 14px;
             line-height: 1.5;
             overflow-x: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
-            color: var(--text-primary);
+            color: var(--code-string);
         }
         
         .preview-img {
             max-width: 100%;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            background-color: var(--bg-dark);
+            background-color: #1E1E1E;
             padding: 10px;
             display: block;
             margin: 0 auto;
@@ -304,13 +324,14 @@
             top: 20px;
             right: 20px;
             background-color: var(--bg-card);
-            border-left: 4px solid #2ea043;
+            border-left: 4px solid var(--success-color);
             color: var(--text-primary);
             padding: 12px 16px;
             border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             z-index: 100;
             animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+            font-family: 'Consolas', 'Courier New', monospace;
         }
         
         @keyframes slideIn {
@@ -338,7 +359,7 @@
             display: none;
             width: 24px;
             height: 24px;
-            border: 3px solid var(--text-secondary);
+            border: 3px solid var(--border-color);
             border-radius: 50%;
             border-top-color: var(--text-accent);
             animation: spin 1s linear infinite;
@@ -352,7 +373,7 @@
         }
         
         .instructions {
-            background-color: rgba(88, 166, 255, 0.1);
+            background-color: rgba(86, 156, 214, 0.1);
             border-left: 4px solid var(--text-accent);
             padding: 16px;
             margin-top: 16px;
@@ -361,7 +382,8 @@
         
         .instructions h3 {
             margin-top: 0;
-            color: var(--text-accent);
+            color: var(--text-secondary);
+            font-family: 'Consolas', 'Courier New', monospace;
         }
         
         .instructions ol {
@@ -375,6 +397,41 @@
         
         .instructions li:last-child {
             margin-bottom: 0;
+        }
+        
+        .footer {
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .footer a {
+            color: var(--code-function);
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .code-bracket {
+            color: var(--text-primary);
+        }
+        
+        .code-keyword {
+            color: var(--code-keyword);
+        }
+        
+        .code-function {
+            color: var(--code-function);
+        }
+        
+        .code-comment {
+            color: var(--code-comment);
         }
         
         @media (max-width: 768px) {
@@ -400,7 +457,7 @@
                     <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
                 </svg>
             </div>
-            <h1>GitHub Contribution Streak Generator</h1>
+            <h1><span class="code-bracket">&lt;</span><span class="code-keyword">GitHub</span><span class="code-bracket">&gt;</span> Contribution Streak Generator <span class="code-bracket">&lt;/</span><span class="code-keyword">GitHub</span><span class="code-bracket">&gt;</span></h1>
         </div>
     </div>
 
@@ -410,13 +467,13 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                 </svg>
-                Create Your GitHub Streak Badge
+                <span class="code-function">createStreakBadge</span><span class="code-bracket">()</span>
             </h1>
         </div>
         <div class="card-body">
             <div class="form-grid">
                 <div class="form-group full-width">
-                    <label for="username">GitHub Username</label>
+                    <label for="username"><span class="code-keyword">const</span> username = <span class="code-string">"yourUsername"</span>;</label>
                     <div class="input-wrapper">
                         <input type="text" id="username" name="username" placeholder="e.g., octocat" autocomplete="off">
                         <div class="input-tooltip tooltip">
@@ -431,12 +488,12 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="from-date">From Date (Optional)</label>
+                    <label for="from-date"><span class="code-keyword">let</span> fromDate = <span class="code-string">"YYYY-MM-DD"</span>;</label>
                     <input type="date" id="from-date" name="from-date">
                 </div>
                 
                 <div class="form-group">
-                    <label for="to-date">To Date (Optional)</label>
+                    <label for="to-date"><span class="code-keyword">let</span> toDate = <span class="code-string">"YYYY-MM-DD"</span>;</label>
                     <input type="date" id="to-date" name="to-date">
                 </div>
             </div>
@@ -446,13 +503,13 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/>
                     </svg>
-                    Reset
+                    <span class="code-function">reset</span><span class="code-bracket">()</span>
                 </button>
                 <button class="btn-primary" type="button" onclick="generateMarkdown()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 5v14M5 12h14"/>
                     </svg>
-                    Generate Widget
+                    <span class="code-function">generate</span><span class="code-bracket">()</span>
                 </button>
             </div>
         </div>
@@ -462,7 +519,7 @@
         <div class="results-layout">
             <div class="output-section">
                 <div class="output-header">
-                    <span>Widget Preview</span>
+                    <span><span class="code-comment">// preview output</span></span>
                     <div class="loader" id="preview-loader"></div>
                 </div>
                 <div class="output-content">
@@ -472,25 +529,25 @@
             
             <div class="output-section">
                 <div class="output-header">
-                    <span>Markdown Code</span>
+                    <span><span class="code-comment">// markdown</span></span>
                     <button class="btn-blue" onclick="copyMarkdown()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                         </svg>
-                        Copy
+                        <span class="code-function">copy</span><span class="code-bracket">()</span>
                     </button>
                 </div>
                 <div class="output-content">
                     <div class="markdown-output" id="markdown-output"></div>
                     
                     <div class="instructions">
-                        <h3>How to add this to your GitHub README</h3>
+                        <h3><span class="code-function">howToUse</span><span class="code-bracket">()</span> <span class="code-comment">// Instructions</span></h3>
                         <ol>
-                            <li>Copy the markdown code above using the Copy button</li>
-                            <li>Edit your profile README.md file (usually found at username/username)</li>
-                            <li>Paste the copied markdown code where you want the streak stats to appear</li>
-                            <li>Commit the changes to see your streak stats on your profile!</li>
+                            <li><span class="code-bracket">1.</span> Copy the markdown code above using the Copy button</li>
+                            <li><span class="code-bracket">2.</span> Edit your profile README.md file (usually found at username/username)</li>
+                            <li><span class="code-bracket">3.</span> Paste the copied markdown code where you want the streak stats to appear</li>
+                            <li><span class="code-bracket">4.</span> Commit the changes to see your streak stats on your profile!</li>
                         </ol>
                     </div>
                 </div>
@@ -498,12 +555,20 @@
         </div>
     </div>
 
+    <div class="footer">
+        <p><span class="code-comment">/* Made with ❤️ for developers */</span></p>
+        <p>
+            <span class="code-keyword">function</span> <span class="code-function">keepCoding</span><span class="code-bracket">()</span> <span class="code-bracket">{</span> 
+            <a href="https://github.com" target="_blank">GitHub</a> <span class="code-bracket">}</span>
+        </p>
+    </div>
+
     <div class="output-alert" id="copy-alert">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ea043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6A9955" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
             <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
             <polyline points="22 4 12 14.01 9 11.01"></polyline>
         </svg>
-        Markdown copied to clipboard!
+        <span class="code-function">success</span><span class="code-bracket">()</span>: Markdown copied to clipboard!
     </div>
 
     <script>
