@@ -24,9 +24,10 @@ export function renderStreakSVG({
     .bg { fill: #13111C; rx: 10; }
     .card { fill: #1A1825; rx: 8; }
     .stat-circle { fill: #22202D; }
-    .label { font: 500 12px ui-monospace, SFMono-Regular, monospace; fill: #A2A0B3; }
-    .sublabel { font: 400 10px ui-monospace, SFMono-Regular, monospace; fill: #6E6C7E; }
-    .value { font: 700 26px ui-monospace, SFMono-Regular, monospace; fill: #E2E1E8; }
+    .label { font: 500 11px ui-monospace, SFMono-Regular, monospace; fill: #A2A0B3; }
+    .sublabel { font: 400 8px ui-monospace, SFMono-Regular, monospace; fill: #6E6C7E; }
+    .value { font: 700 22px ui-monospace, SFMono-Regular, monospace; fill: #E2E1E8; }
+    .unit { font: 400 9px ui-monospace, SFMono-Regular, monospace; fill: #6E6C7E; }
     .total { fill: #66BB6A; }
     .current { fill: #FF7043; }
     .longest { fill: #FFD54F; }
@@ -41,29 +42,29 @@ export function renderStreakSVG({
     <!-- Total contributions -->
     <circle cx="0" cy="0" r="40" class="stat-circle" />
     <text x="0" y="5" class="value total" text-anchor="middle">${totalContributions}</text>
-    <text x="0" y="25" class="sublabel" text-anchor="middle">contributions</text>
+    <text x="0" y="22" class="unit" text-anchor="middle">contributions</text>
   </g>
 
   <g transform="translate(200, 65)">
     <!-- Current streak -->
     <circle cx="0" cy="0" r="40" class="stat-circle" />
     <text x="0" y="5" class="value current" text-anchor="middle">${currentStreak}</text>
-    <text x="0" y="25" class="sublabel" text-anchor="middle">days</text>
+    <text x="0" y="22" class="unit" text-anchor="middle">days</text>
   </g>
 
   <g transform="translate(333, 65)">
     <!-- Longest streak -->
     <circle cx="0" cy="0" r="40" class="stat-circle" />
     <text x="0" y="5" class="value longest" text-anchor="middle">${longestStreak}</text>
-    <text x="0" y="25" class="sublabel" text-anchor="middle">days</text>
+    <text x="0" y="22" class="unit" text-anchor="middle">days</text>
   </g>
 
   <!-- Labels -->
-  <text x="67" y="120" class="label" text-anchor="middle">Total Contributions</text>
-  <text x="200" y="120" class="label" text-anchor="middle">Current Streak</text>
-  <text x="200" y="135" class="sublabel" text-anchor="middle">${currentStreakDates}</text>
-  <text x="333" y="120" class="label" text-anchor="middle">Longest Streak</text>
-  <text x="333" y="135" class="sublabel" text-anchor="middle">${longestStreakDates}</text>
+  <text x="67" y="118" class="label" text-anchor="middle">Total Contributions</text>
+  <text x="200" y="118" class="label" text-anchor="middle">Current Streak</text>
+  <text x="200" y="132" class="sublabel" text-anchor="middle" textLength="120" lengthAdjust="spacingAndGlyphs">${currentStreakDates}</text>
+  <text x="333" y="118" class="label" text-anchor="middle">Longest Streak</text>
+  <text x="333" y="132" class="sublabel" text-anchor="middle" textLength="120" lengthAdjust="spacingAndGlyphs">${longestStreakDates}</text>
 </svg>
   `;
 }
