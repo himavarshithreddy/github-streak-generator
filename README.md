@@ -10,7 +10,7 @@ There are two main ways you can use this generator:
 
 I host a public instance of this generator which you are welcome to use:
 
-*   **Live Generator:** [https://github-streak-generator.vercel.app/]
+*   **Live Generator:** https://github-streak-generator.vercel.app/
 
 To use it:
 1.  Navigate to the link above.
