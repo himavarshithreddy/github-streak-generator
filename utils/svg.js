@@ -1,7 +1,7 @@
 export function renderStreakSVG({
   currentStreak, currentStreakStart, currentStreakEnd,
   longestStreak, longestStreakStart, longestStreakEnd,
-  totalContributions, firstContributionDate
+  totalContributions, contributionsStartDate
 }) {
   // Format dates if they exist
   const formatDate = (dateStr) => {
@@ -10,11 +10,11 @@ export function renderStreakSVG({
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   };
 
-  // For total contributions, use firstContributionDate if available, otherwise fall back to earliest streak date
-  const earliestDate = firstContributionDate || [currentStreakStart, longestStreakStart].filter(Boolean).sort()[0];
-  const totalContributionsDates = earliestDate 
-    ? `${formatDate(earliestDate)} → ${formatDate(new Date())}`
-    : 'All time';
+  // For total contributions, use contributionsStartDate if provided
+  const totalContributionsEndDate = currentStreakEnd || new Date();
+  const totalContributionsDates = contributionsStartDate
+    ? `${formatDate(contributionsStartDate)} → ${formatDate(totalContributionsEndDate)}`
+    : 'All time'; // Fallback if contributionsStartDate is not provided
 
   const currentStreakDates = currentStreak > 0
     ? `${formatDate(currentStreakStart)} → ${formatDate(currentStreakEnd)}`
