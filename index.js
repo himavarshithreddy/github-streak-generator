@@ -6,27 +6,58 @@ const { renderStreakSVG } = require("./utils/svg");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+/**
+ * JSON endpoint for streak data, with optional from/to query parameters
+ */
 app.get("/api/streak/:username", async (req, res) => {
   const { username } = req.params;
+  const { from, to } = req.query;
   try {
-    const data = await getContributionData(username, process.env.GITHUB_TOKEN);
+    // Pass optional from/to to support dynamic windows; defaults to last year
+    const data = await getContributionData(username, process.env.GITHUB_TOKEN, from, to);
     const streaks = calculateStreaks(data);
-    res.json({ username, ...streaks });
+    res.json({ username, from: from || null, to: to || null, ...streaks });
   } catch (err) {
-    res.status(500).json({ error: "Unable to fetch streak data" });
+    console.error("Error fetching streak data:", err);
+    res.status(500).json({ error: "Unable to fetch streak data", details: err.message });
   }
 });
 
+/**
+ * SVG badge endpoint for streak data, with optional from/to query parameters
+ */
 app.get("/api/streak/:username/svg", async (req, res) => {
   const { username } = req.params;
+  const { from, to } = req.query;
   try {
-    const data = await getContributionData(username, process.env.GITHUB_TOKEN);
-    const streaks = calculateStreaks(data);
-    const svg = renderStreakSVG({ ...streaks, username });
+    const data = await getContributionData(username, process.env.GITHUB_TOKEN, from, to);
+    const stats = calculateStreaks(data);
+    const {
+      totalContributions,
+      currentStreak,
+      currentStreakStart,
+      currentStreakEnd,
+      longestStreak,
+      longestStreakStart,
+      longestStreakEnd
+    } = stats;
+
+    const svg = renderStreakSVG({
+      username,
+      totalContributions,
+      currentStreak,
+      currentStreakStart,
+      currentStreakEnd,
+      longestStreak,
+      longestStreakStart,
+      longestStreakEnd
+    });
+
     res.setHeader("Content-Type", "image/svg+xml");
     res.send(svg);
   } catch (err) {
-    res.status(500).send("<svg><text>Error loading SVG</text></svg>");
+    console.error("SVG generation error:", err);
+    res.status(500).send(`<svg><text>Error: ${err.message}</text></svg>`);
   }
 });
 
