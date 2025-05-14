@@ -5,147 +5,781 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub Streak Generator</title>
     <style>
+        :root {
+            --bg-dark: #0d1117;
+            --bg-card: #161b22;
+            --border-color: #30363d;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --text-accent: #58a6ff;
+            --btn-primary: #238636;
+            --btn-primary-hover: #2ea043;
+            --btn-secondary: #21262d;
+            --btn-secondary-hover: #30363d;
+            --btn-blue: #1f6feb;
+            --btn-blue-hover: #388bfd;
+            --header-bg: #161b22;
+            --tooltip-bg: #393e46;
+        }
+        
+        * {
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh;
             margin: 0;
-            background-color: #0d1117;
-            color: #c9d1d9;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
         }
+        
+        .header {
+            width: 100%;
+            background-color: var(--header-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 0;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            max-width: 900px;
+            width: 100%;
+            padding: 0 24px;
+        }
+        
+        .logo {
+            margin-right: 16px;
+        }
+        
         .container {
-            background-color: #161b22;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            text-align: center;
+            background-color: var(--bg-card);
+            border-radius: 6px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+            margin: 0 auto 40px;
+            width: 100%;
+            max-width: 800px;
+            padding: 2px;
+            overflow: hidden;
         }
+        
+        .card-header {
+            background-color: rgba(13, 17, 23, 0.3);
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+        
         h1 {
-            color: #58a6ff;
+            color: var(--text-accent);
+            margin: 0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        h1 svg {
+            margin-right: 10px;
+        }
+        
+        .card-body {
+            padding: 24px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
             margin-bottom: 20px;
         }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
+            font-weight: 600;
+            color: var(--text-primary);
         }
-        input[type="text"] {
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #30363d;
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
             border-radius: 6px;
-            background-color: #0d1117;
-            color: #c9d1d9;
-            width: calc(100% - 22px); /* Adjust for padding and border */
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 20px;
         }
-        button {
-            background-color: #238636;
+        
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--text-accent);
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
+        }
+        
+        .input-tooltip {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            cursor: help;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 250px;
+            background-color: var(--tooltip-bg);
+            color: var(--text-primary);
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 130%;
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 13px;
+            font-weight: normal;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--tooltip-bg) transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .theme-options {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .theme-option {
+            border: 2px solid transparent;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            width: 80px;
+            height: 40px;
+            position: relative;
+            transition: transform 0.2s ease;
+        }
+        
+        .theme-option:hover {
+            transform: translateY(-2px);
+        }
+        
+        .theme-option.selected {
+            border-color: var(--text-accent);
+            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.3);
+        }
+        
+        .theme-option-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 10px 20px;
-            border: none;
+            font-size: 10px;
+            text-align: center;
+            padding: 2px 0;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 10px 16px;
+            border: 1px solid rgba(240, 246, 252, 0.1);
             border-radius: 6px;
             cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.2s ease-in-out;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
         }
-        button:hover {
-            background-color: #2ea043;
+        
+        button svg {
+            margin-right: 8px;
         }
-        #markdown-output {
-            margin-top: 30px;
-            background-color: #0d1117;
-            padding: 15px;
+        
+        .btn-primary {
+            background-color: var(--btn-primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--btn-primary-hover);
+        }
+        
+        .btn-secondary {
+            background-color: var(--btn-secondary);
+            color: var(--text-primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--btn-secondary-hover);
+        }
+        
+        .btn-blue {
+            background-color: var(--btn-blue);
+            color: white;
+        }
+        
+        .btn-blue:hover {
+            background-color: var(--btn-blue-hover);
+        }
+        
+        .output-container {
+            margin-top: 40px;
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .output-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
-            border: 1px solid #30363d;
-            text-align: left;
+            overflow: hidden;
         }
-        #markdown-output code {
-            display: block;
+        
+        .output-header {
+            background-color: rgba(13, 17, 23, 0.3);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .output-content {
+            padding: 16px;
+        }
+        
+        .markdown-output {
+            background-color: var(--bg-dark);
+            padding: 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
-            color: #c9d1d9;
+            color: var(--text-primary);
         }
-        .copy-button {
-            background-color: #1f6feb;
-            margin-top: 10px;
+        
+        .preview-img {
+            max-width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-dark);
+            padding: 10px;
+            display: block;
+            margin: 0 auto;
         }
-        .copy-button:hover {
-            background-color: #388bfd;
+        
+        .output-alert {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--bg-card);
+            border-left: 4px solid #2ea043;
+            color: var(--text-primary);
+            padding: 12px 16px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        
+        .loader {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--text-secondary);
+            border-radius: 50%;
+            border-top-color: var(--text-accent);
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .advanced-options {
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+        
+        .advanced-toggle {
+            background: none;
+            border: none;
+            color: var(--text-accent);
+            padding: 0;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .toggle-icon {
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-icon.open {
+            transform: rotate(90deg);
+        }
+        
+        .advanced-content {
+            display: none;
+        }
+        
+        footer {
+            margin-top: auto;
+            padding: 24px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+        }
+        
+        footer a {
+            color: var(--text-accent);
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            
+            .container {
+                margin: 0 16px 40px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>GitHub Streak Widget Generator</h1>
-        <label for="username">GitHub Username:</label>
-        <input type="text" id="username" name="username" placeholder="e.g., octocat">
-        
-        <label for="from-date">From Date (Optional):</label>
-        <input type="date" id="from-date" name="from-date">
-
-        <label for="to-date">To Date (Optional):</label>
-        <input type="date" id="to-date" name="to-date">
-
-        <button onclick="generateMarkdown()">Generate Markdown</button>
-
-        <div id="output-container" style="display: none; margin-top: 30px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
-            <div id="markdown-output">
-                <h2>Embed this in your GitHub Profile:</h2>
-                <pre><code></code></pre>
-                <button onclick="copyMarkdown()" class="copy-button">Copy to Clipboard</button>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <svg height="32" viewBox="0 0 16 16" version="1.1" width="32" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
             </div>
-            <div id="preview-output">
-                <h2>Live Preview:</h2>
-                <img id="streak-preview-img" src="" alt="GitHub Streak Preview" style="max-width: 100%; border: 1px solid #30363d; border-radius: 6px; background-color: #0d1117;"/>
+            <h1>GitHub Streak Widget Generator</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card-header">
+            <h1>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                Generate Your GitHub Streak Widget
+            </h1>
+        </div>
+        <div class="card-body">
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label for="username">GitHub Username</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="username" name="username" placeholder="e.g., octocat" autocomplete="off">
+                        <div class="input-tooltip tooltip">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <span class="tooltiptext">Enter your GitHub username to generate your streak statistics</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="from-date">From Date (Optional)</label>
+                    <input type="date" id="from-date" name="from-date">
+                </div>
+                
+                <div class="form-group">
+                    <label for="to-date">To Date (Optional)</label>
+                    <input type="date" id="to-date" name="to-date">
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="theme">Widget Theme</label>
+                    <div class="theme-options">
+                        <div class="theme-option selected" data-theme="default" style="background: linear-gradient(to right, #0D1117, #161B22);">
+                            <div class="theme-option-label">Default</div>
+                        </div>
+                        <div class="theme-option" data-theme="dark" style="background: linear-gradient(to right, #151515, #252525);">
+                            <div class="theme-option-label">Dark</div>
+                        </div>
+                        <div class="theme-option" data-theme="radical" style="background: linear-gradient(to right, #141321, #241B2F);">
+                            <div class="theme-option-label">Radical</div>
+                        </div>
+                        <div class="theme-option" data-theme="merko" style="background: linear-gradient(to right, #0A0F0B, #1A1F1B);">
+                            <div class="theme-option-label">Merko</div>
+                        </div>
+                        <div class="theme-option" data-theme="gruvbox" style="background: linear-gradient(to right, #282828, #383838);">
+                            <div class="theme-option-label">Gruvbox</div>
+                        </div>
+                        <div class="theme-option" data-theme="tokyonight" style="background: linear-gradient(to right, #1A1B27, #2A2B37);">
+                            <div class="theme-option-label">Tokyo</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <button class="advanced-toggle" type="button" onclick="toggleAdvanced()">
+                        <svg class="toggle-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                        Advanced Options
+                    </button>
+                    <div class="advanced-content">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="locale">Locale</label>
+                                <select id="locale" name="locale">
+                                    <option value="en">English</option>
+                                    <option value="de">German</option>
+                                    <option value="fr">French</option>
+                                    <option value="ja">Japanese</option>
+                                    <option value="ko">Korean</option>
+                                    <option value="es">Spanish</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="mode">Display Mode</label>
+                                <select id="mode" name="mode">
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="hide-total-contributions">Hide Total Contributions</label>
+                                <select id="hide-total-contributions" name="hide-total-contributions">
+                                    <option value="false">Show</option>
+                                    <option value="true">Hide</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="card-width">Card Width</label>
+                                <input type="text" id="card-width" name="card-width" placeholder="e.g., 495">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="buttons-container">
+                <button class="btn-secondary" type="button" onclick="resetForm()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"/>
+                    </svg>
+                    Reset
+                </button>
+                <button class="btn-primary" type="button" onclick="generateMarkdown()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12h14"/>
+                    </svg>
+                    Generate Widget
+                </button>
             </div>
         </div>
     </div>
 
+    <div class="output-container" id="output-container">
+        <div class="output-section">
+            <div class="output-header">
+                <span>Widget Preview</span>
+                <div class="loader" id="preview-loader"></div>
+            </div>
+            <div class="output-content">
+                <img id="streak-preview-img" class="preview-img" src="" alt="GitHub Streak Preview">
+            </div>
+        </div>
+        
+        <div class="output-section">
+            <div class="output-header">
+                <span>Markdown Code</span>
+                <button class="btn-blue" onclick="copyMarkdown()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copy
+                </button>
+            </div>
+            <div class="output-content">
+                <div class="markdown-output" id="markdown-output"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="output-alert" id="copy-alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2ea043" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        Markdown copied to clipboard!
+    </div>
+
+    <footer>
+        Created with ❤️ for GitHub users &middot; 
+        <a href="https://github.com/DenverCoder1/github-readme-streak-stats" target="_blank">Based on GitHub Readme Streak Stats</a>
+    </footer>
+
     <script>
+        // Get all theme options
+        const themeOptions = document.querySelectorAll('.theme-option');
+        
+        // Add click event to each theme option
+        themeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                themeOptions.forEach(opt => opt.classList.remove('selected'));
+                // Add selected class to clicked option
+                this.classList.add('selected');
+            });
+        });
+        
+        // Toggle advanced options
+        function toggleAdvanced() {
+            const advancedContent = document.querySelector('.advanced-content');
+            const toggleIcon = document.querySelector('.toggle-icon');
+            
+            if (advancedContent.style.display === 'block') {
+                advancedContent.style.display = 'none';
+                toggleIcon.classList.remove('open');
+            } else {
+                advancedContent.style.display = 'block';
+                toggleIcon.classList.add('open');
+            }
+        }
+        
+        // Reset form
+        function resetForm() {
+            document.getElementById('username').value = '';
+            document.getElementById('from-date').value = '';
+            document.getElementById('to-date').value = '';
+            document.getElementById('locale').value = 'en';
+            document.getElementById('mode').value = 'daily';
+            document.getElementById('hide-total-contributions').value = 'false';
+            document.getElementById('card-width').value = '';
+            
+            // Reset theme selection
+            themeOptions.forEach(opt => opt.classList.remove('selected'));
+            document.querySelector('[data-theme="default"]').classList.add('selected');
+            
+            // Hide output container
+            document.getElementById('output-container').style.display = 'none';
+        }
+        
+        // Generate markdown
         function generateMarkdown() {
             const username = document.getElementById('username').value;
             const fromDate = document.getElementById('from-date').value;
             const toDate = document.getElementById('to-date').value;
-
+            const locale = document.getElementById('locale').value;
+            const mode = document.getElementById('mode').value;
+            const hideTotal = document.getElementById('hide-total-contributions').value;
+            const cardWidth = document.getElementById('card-width').value;
+            const selectedTheme = document.querySelector('.theme-option.selected').getAttribute('data-theme');
+            
             if (!username) {
-                alert('Please enter a GitHub username.');
+                showAlert('Please enter a GitHub username', 'error');
                 return;
             }
-
+            
+            // Show loader
+            document.getElementById('preview-loader').style.display = 'inline-block';
+            
+            // Build URL with parameters
             let widgetUrl = `${window.location.origin}/api/streak/svg?username=${username}`;
+            
             if (fromDate) {
                 widgetUrl += `&from=${fromDate}`;
             }
+            
             if (toDate) {
                 widgetUrl += `&to=${toDate}`;
             }
             
-            const markdown = `[![GitHub Streak](${widgetUrl})](https://git.io/streak-stats)`;
-
-            const outputContainer = document.getElementById('output-container');
-            outputContainer.style.display = 'flex'; // Or 'block' if you prefer vertical stacking initially
+            if (selectedTheme && selectedTheme !== 'default') {
+                widgetUrl += `&theme=${selectedTheme}`;
+            }
             
-            const markdownOutputDiv = document.getElementById('markdown-output');
-            markdownOutputDiv.querySelector('code').textContent = markdown;
-
+            if (locale && locale !== 'en') {
+                widgetUrl += `&locale=${locale}`;
+            }
+            
+            if (mode && mode !== 'daily') {
+                widgetUrl += `&mode=${mode}`;
+            }
+            
+            if (hideTotal === 'true') {
+                widgetUrl += `&hide_total=true`;
+            }
+            
+            if (cardWidth) {
+                widgetUrl += `&card_width=${cardWidth}`;
+            }
+            
+            // Create markdown
+            const markdown = `[![GitHub Streak](${widgetUrl})](https://git.io/streak-stats)`;
+            
+            // Show output container
+            document.getElementById('output-container').style.display = 'flex';
+            
+            // Update markdown output
+            document.getElementById('markdown-output').textContent = markdown;
+            
+            // Set preview image
             const previewImg = document.getElementById('streak-preview-img');
             previewImg.src = widgetUrl;
-            // Ensure the preview image's parent is also visible if it was hidden
-            document.getElementById('preview-output').style.display = 'block'; 
+            
+            // Hide loader when image loads
+            previewImg.onload = function() {
+                document.getElementById('preview-loader').style.display = 'none';
+            };
+            
+            // Scroll to output
+            document.getElementById('output-container').scrollIntoView({ behavior: 'smooth' });
         }
-
+        
+        // Copy markdown to clipboard
         function copyMarkdown() {
-            const markdownText = document.getElementById('markdown-output').querySelector('code').textContent;
+            const markdownText = document.getElementById('markdown-output').textContent;
+            
             navigator.clipboard.writeText(markdownText).then(() => {
-                alert('Markdown copied to clipboard!');
+                showCopyAlert();
             }).catch(err => {
                 console.error('Failed to copy: ', err);
-                alert('Failed to copy markdown. Please copy it manually.');
+                showAlert('Failed to copy markdown. Please copy it manually.', 'error');
             });
         }
+        
+        // Show copy alert
+        function showCopyAlert() {
+            const alert = document.getElementById('copy-alert');
+            alert.style.display = 'flex';
+            
+            // Hide after animation completes
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Show alert message
+        function showAlert(message, type) {
+            alert(message); // Simplified for now
+        }
+        
+        // Set current date as max date for date inputs
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('from-date').max = today;
+        document.getElementById('to-date').max = today;
+        
+        // Set default to-date as today
+        document.getElementById('to-date').value = today;
     </script>
 </body>
-</html> 
+</html>
