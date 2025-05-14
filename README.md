@@ -10,7 +10,7 @@ There are two main ways you can use this generator:
 
 I host a public instance of this generator which you are welcome to use:
 
-*   **Live Generator:** [YOUR_PUBLIC_DEPLOYMENT_URL_HERE]
+*   **Live Generator:** [https://github-streak-generator.vercel.app/]
 
 To use it:
 1.  Navigate to the link above.
@@ -22,7 +22,7 @@ To use it:
 
     The Markdown will look like this:
     ```markdown
-    [![GitHub Streak]([YOUR_PUBLIC_DEPLOYMENT_URL_HERE]/api/streak/svg?username=your-username)](https://git.io/streak-stats)
+    [![GitHub Streak]([https://github-streak-generator.vercel.app/]/api/streak/svg?username=your-username)]
     ```
     (Just replace `your-username` with the GitHub username. You can also add `&from=YYYY-MM-DD&to=YYYY-MM-DD` for date ranges to the image URL.)
 
