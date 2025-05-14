@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Streak Generator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+        .container {
+            background-color: #161b22;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        h1 {
+            color: #58a6ff;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            width: calc(100% - 22px); /* Adjust for padding and border */
+        }
+        button {
+            background-color: #238636;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s ease-in-out;
+        }
+        button:hover {
+            background-color: #2ea043;
+        }
+        #markdown-output {
+            margin-top: 30px;
+            background-color: #0d1117;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+            text-align: left;
+        }
+        #markdown-output code {
+            display: block;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #c9d1d9;
+        }
+        .copy-button {
+            background-color: #1f6feb;
+            margin-top: 10px;
+        }
+        .copy-button:hover {
+            background-color: #388bfd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>GitHub Streak Widget Generator</h1>
+        <label for="username">GitHub Username:</label>
+        <input type="text" id="username" name="username" placeholder="e.g., octocat">
+        
+        <label for="from-date">From Date (Optional):</label>
+        <input type="date" id="from-date" name="from-date">
+
+        <label for="to-date">To Date (Optional):</label>
+        <input type="date" id="to-date" name="to-date">
+
+        <button onclick="generateMarkdown()">Generate Markdown</button>
+
+        <div id="output-container" style="display: none; margin-top: 30px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+            <div id="markdown-output">
+                <h2>Embed this in your GitHub Profile:</h2>
+                <pre><code></code></pre>
+                <button onclick="copyMarkdown()" class="copy-button">Copy to Clipboard</button>
+            </div>
+            <div id="preview-output">
+                <h2>Live Preview:</h2>
+                <img id="streak-preview-img" src="" alt="GitHub Streak Preview" style="max-width: 100%; border: 1px solid #30363d; border-radius: 6px; background-color: #0d1117;"/>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateMarkdown() {
+            const username = document.getElementById('username').value;
+            const fromDate = document.getElementById('from-date').value;
+            const toDate = document.getElementById('to-date').value;
+
+            if (!username) {
+                alert('Please enter a GitHub username.');
+                return;
+            }
+
+            let widgetUrl = `${window.location.origin}/api/streak/svg?username=${username}`;
+            if (fromDate) {
+                widgetUrl += `&from=${fromDate}`;
+            }
+            if (toDate) {
+                widgetUrl += `&to=${toDate}`;
+            }
+            
+            const markdown = `[![GitHub Streak](${widgetUrl})](https://git.io/streak-stats)`;
+
+            const outputContainer = document.getElementById('output-container');
+            outputContainer.style.display = 'flex'; // Or 'block' if you prefer vertical stacking initially
+            
+            const markdownOutputDiv = document.getElementById('markdown-output');
+            markdownOutputDiv.querySelector('code').textContent = markdown;
+
+            const previewImg = document.getElementById('streak-preview-img');
+            previewImg.src = widgetUrl;
+            // Ensure the preview image's parent is also visible if it was hidden
+            document.getElementById('preview-output').style.display = 'block'; 
+        }
+
+        function copyMarkdown() {
+            const markdownText = document.getElementById('markdown-output').querySelector('code').textContent;
+            navigator.clipboard.writeText(markdownText).then(() => {
+                alert('Markdown copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy markdown. Please copy it manually.');
+            });
+        }
+    </script>
+</body>
+</html> 

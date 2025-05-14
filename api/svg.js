@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     const data = await getContributionData(username, process.env.GITHUB_TOKEN, from, to);
     const stats = calculateStreaks(data);
 
-    const svg = renderStreakSVG({ username, ...stats });
+    const svg = renderStreakSVG({ ...stats });
     res.setHeader('Content-Type', 'image/svg+xml');
     res.status(200).send(svg);
   } catch (err) {

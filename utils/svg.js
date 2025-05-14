@@ -1,7 +1,7 @@
 export function renderStreakSVG({ 
   currentStreak, currentStreakStart, currentStreakEnd,
   longestStreak, longestStreakStart, longestStreakEnd,
-  totalContributions, username 
+  totalContributions
 }) {
   // Format dates if they exist
   const formatDate = (dateStr) => {
@@ -32,8 +32,6 @@ export function renderStreakSVG({
   <rect x="10" y="10" width="475" height="165" class="card"/>
   
   <text x="25" y="35" class="title">🔥 GitHub Contribution Streaks</text>
-  <text x="25" y="55" class="label">User:</text>
-  <text x="90" y="55" class="value">${username}</text>
   
   <text x="25" y="85" class="label">Current Streak:</text>
   <text x="155" y="85" class="value fire">${currentStreak} days</text>
