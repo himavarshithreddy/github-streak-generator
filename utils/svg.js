@@ -19,93 +19,30 @@ export function renderStreakSVG({
     : 'No streak data';
 
   return `
-<svg width="500" height="200" xmlns="http://www.w3.org/2000/svg">
+<svg width="495" height="185" xmlns="http://www.w3.org/2000/svg">
   <style>
-    .bg {
-      fill: url(#bgGradient);
-    }
-    .card {
-      fill: #1a1e26;
-      stroke: #00ff88;
-      stroke-width: 1.5;
-      rx: 8;
-      filter: url(#glow);
-    }
-    .title {
-      font: bold 22px 'Fira Code', monospace;
-      fill: #00ff88;
-      text-anchor: middle;
-    }
-    .label {
-      font: 14px 'Fira Code', monospace;
-      fill: #8be9fd;
-    }
-    .value {
-      font: 16px 'Fira Code', monospace;
-      fill: #f1f1f1;
-    }
-    .fire {
-      font-size: 18px;
-      fill: #ff79c6;
-      transition: transform 0.2s;
-    }
-    .fire:hover {
-      transform: scale(1.1);
-    }
-    .icon {
-      font-size: 20px;
-    }
-    @keyframes pulse {
-      0% { opacity: 0.7; }
-      50% { opacity: 1; }
-      100% { opacity: 0.7; }
-    }
-    .pulse {
-      animation: pulse 2s infinite;
-    }
+    .title { font: bold 20px 'Segoe UI', Ubuntu, Sans-Serif; fill: #58a6ff; }
+    .label { font: bold 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
+    .value { font: 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
+    .bg { fill: #0d1117; }
+    .card { stroke: #30363d; fill: #161b22; stroke-width: 1; rx: 6; }
+    .fire { font-size: 24px; }
   </style>
+  <rect width="100%" height="100%" class="bg" rx="10" ry="10"/>
+  <rect x="10" y="10" width="475" height="165" class="card"/>
+  
+  <text x="25" y="35" class="title">🔥 GitHub Contribution Streaks</text>
+  
+  <text x="25" y="85" class="label">Current Streak:</text>
+  <text x="155" y="85" class="value fire">${currentStreak} days</text>
+  <text x="25" y="105" class="value" font-size="13">${currentStreakDates}</text>
+  
+  <text x="25" y="135" class="label">Longest Streak:</text>
+  <text x="155" y="135" class="value fire">${longestStreak} days</text>
+  <text x="25" y="155" class="value" font-size="13">${longestStreakDates}</text>
 
-  <!-- Gradient Background -->
-  <defs>
-    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0a0e17;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#1a2332;stop-opacity:1" />
-    </linearGradient>
-    <!-- Glow Effect -->
-    <filter id="glow">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-
-  <!-- Background -->
-  <rect width="100%" height="100%" class="bg" rx="12" ry="12"/>
-
-  <!-- Card -->
-  <rect x="15" y="15" width="470" height="170" class="card"/>
-
-  <!-- Title -->
-  <text x="250" y="45" class="title">💾 GitHub Streak Dashboard</text>
-
-  <!-- Current Streak -->
-  <text x="30" y="90" class="label">🚀 Current Streak:</text>
-  <text x="160" y="90" class="value fire"> ${currentStreak} days</text>
-  <text x="30" y="110" class="value" font-size="12">${currentStreakDates}</text>
-
-  <!-- Longest Streak -->
-  <text x="30" y="140" class="label">🏆 Longest Streak:</text>
-  <text x="160" y="140" class="value fire">${longestStreak} days</text>
-  <text x="30" y="160" class="value" font-size="12">${longestStreakDates}</text>
-
-  <!-- Total Contributions -->
-  <text x="270" y="90" class="label">📊 Total Commits:</text>
-  <text x="400" y="90" class="value fire pulse">${totalContributions}</text>
-
-  <!-- Decorative Icon -->
-  <text x="450" y="170" class="icon">⚡️</text>
+  <text x="25" y="175" class="label">Total Contributions:</text>
+  <text x="175" y="175" class="value fire">${totalContributions}</text>
 </svg>
   `;
 }

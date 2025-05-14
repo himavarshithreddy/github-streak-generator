@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Streak Generator</title>
+    <title>GitHub Streak README Widget</title>
     <style>
         :root {
             --bg-dark: #0d1117;
@@ -122,8 +122,7 @@
         }
         
         input[type="text"],
-        input[type="date"],
-        select {
+        input[type="date"] {
             width: 100%;
             padding: 10px 12px;
             border: 1px solid var(--border-color);
@@ -135,8 +134,7 @@
         }
         
         input[type="text"]:focus,
-        input[type="date"]:focus,
-        select:focus {
+        input[type="date"]:focus {
             outline: none;
             border-color: var(--text-accent);
             box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
@@ -190,44 +188,6 @@
         .tooltip:hover .tooltiptext {
             visibility: visible;
             opacity: 1;
-        }
-        
-        .theme-options {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .theme-option {
-            border: 2px solid transparent;
-            border-radius: 6px;
-            overflow: hidden;
-            cursor: pointer;
-            width: 80px;
-            height: 40px;
-            position: relative;
-            transition: transform 0.2s ease;
-        }
-        
-        .theme-option:hover {
-            transform: translateY(-2px);
-        }
-        
-        .theme-option.selected {
-            border-color: var(--text-accent);
-            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.3);
-        }
-        
-        .theme-option-label {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            font-size: 10px;
-            text-align: center;
-            padding: 2px 0;
         }
         
         .buttons-container {
@@ -284,9 +244,13 @@
         .output-container {
             margin-top: 40px;
             display: none;
-            flex-direction: column;
-            gap: 20px;
             width: 100%;
+        }
+        
+        .results-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
         
         .output-section {
@@ -387,55 +351,30 @@
             }
         }
         
-        .advanced-options {
-            border-top: 1px solid var(--border-color);
-            margin-top: 20px;
-            padding-top: 20px;
+        .instructions {
+            background-color: rgba(88, 166, 255, 0.1);
+            border-left: 4px solid var(--text-accent);
+            padding: 16px;
+            margin-top: 16px;
+            border-radius: 4px;
         }
         
-        .advanced-toggle {
-            background: none;
-            border: none;
+        .instructions h3 {
+            margin-top: 0;
             color: var(--text-accent);
-            padding: 0;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            margin-bottom: 16px;
         }
         
-        .toggle-icon {
-            margin-right: 8px;
-            transition: transform 0.3s ease;
+        .instructions ol {
+            margin-bottom: 0;
+            padding-left: 20px;
         }
         
-        .toggle-icon.open {
-            transform: rotate(90deg);
+        .instructions li {
+            margin-bottom: 8px;
         }
         
-        .advanced-content {
-            display: none;
-        }
-        
-        footer {
-            margin-top: auto;
-            padding: 24px;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 12px;
-            border-top: 1px solid var(--border-color);
-            width: 100%;
-        }
-        
-        footer a {
-            color: var(--text-accent);
-            text-decoration: none;
-        }
-        
-        footer a:hover {
-            text-decoration: underline;
+        .instructions li:last-child {
+            margin-bottom: 0;
         }
         
         @media (max-width: 768px) {
@@ -461,7 +400,7 @@
                     <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
                 </svg>
             </div>
-            <h1>GitHub Streak Widget Generator</h1>
+            <h1>GitHub Contribution Streak Generator</h1>
         </div>
     </div>
 
@@ -471,7 +410,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
                 </svg>
-                Generate Your GitHub Streak Widget
+                Create Your GitHub Streak Badge
             </h1>
         </div>
         <div class="card-body">
@@ -500,73 +439,6 @@
                     <label for="to-date">To Date (Optional)</label>
                     <input type="date" id="to-date" name="to-date">
                 </div>
-                
-                <div class="form-group full-width">
-                    <label for="theme">Widget Theme</label>
-                    <div class="theme-options">
-                        <div class="theme-option selected" data-theme="default" style="background: linear-gradient(to right, #0D1117, #161B22);">
-                            <div class="theme-option-label">Default</div>
-                        </div>
-                        <div class="theme-option" data-theme="dark" style="background: linear-gradient(to right, #151515, #252525);">
-                            <div class="theme-option-label">Dark</div>
-                        </div>
-                        <div class="theme-option" data-theme="radical" style="background: linear-gradient(to right, #141321, #241B2F);">
-                            <div class="theme-option-label">Radical</div>
-                        </div>
-                        <div class="theme-option" data-theme="merko" style="background: linear-gradient(to right, #0A0F0B, #1A1F1B);">
-                            <div class="theme-option-label">Merko</div>
-                        </div>
-                        <div class="theme-option" data-theme="gruvbox" style="background: linear-gradient(to right, #282828, #383838);">
-                            <div class="theme-option-label">Gruvbox</div>
-                        </div>
-                        <div class="theme-option" data-theme="tokyonight" style="background: linear-gradient(to right, #1A1B27, #2A2B37);">
-                            <div class="theme-option-label">Tokyo</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group full-width">
-                    <button class="advanced-toggle" type="button" onclick="toggleAdvanced()">
-                        <svg class="toggle-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                        Advanced Options
-                    </button>
-                    <div class="advanced-content">
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="locale">Locale</label>
-                                <select id="locale" name="locale">
-                                    <option value="en">English</option>
-                                    <option value="de">German</option>
-                                    <option value="fr">French</option>
-                                    <option value="ja">Japanese</option>
-                                    <option value="ko">Korean</option>
-                                    <option value="es">Spanish</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="mode">Display Mode</label>
-                                <select id="mode" name="mode">
-                                    <option value="daily">Daily</option>
-                                    <option value="weekly">Weekly</option>
-                                    <option value="monthly">Monthly</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="hide-total-contributions">Hide Total Contributions</label>
-                                <select id="hide-total-contributions" name="hide-total-contributions">
-                                    <option value="false">Show</option>
-                                    <option value="true">Hide</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="card-width">Card Width</label>
-                                <input type="text" id="card-width" name="card-width" placeholder="e.g., 495">
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             
             <div class="buttons-container">
@@ -587,29 +459,41 @@
     </div>
 
     <div class="output-container" id="output-container">
-        <div class="output-section">
-            <div class="output-header">
-                <span>Widget Preview</span>
-                <div class="loader" id="preview-loader"></div>
+        <div class="results-layout">
+            <div class="output-section">
+                <div class="output-header">
+                    <span>Widget Preview</span>
+                    <div class="loader" id="preview-loader"></div>
+                </div>
+                <div class="output-content">
+                    <img id="streak-preview-img" class="preview-img" src="" alt="GitHub Streak Preview">
+                </div>
             </div>
-            <div class="output-content">
-                <img id="streak-preview-img" class="preview-img" src="" alt="GitHub Streak Preview">
-            </div>
-        </div>
-        
-        <div class="output-section">
-            <div class="output-header">
-                <span>Markdown Code</span>
-                <button class="btn-blue" onclick="copyMarkdown()">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    Copy
-                </button>
-            </div>
-            <div class="output-content">
-                <div class="markdown-output" id="markdown-output"></div>
+            
+            <div class="output-section">
+                <div class="output-header">
+                    <span>Markdown Code</span>
+                    <button class="btn-blue" onclick="copyMarkdown()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy
+                    </button>
+                </div>
+                <div class="output-content">
+                    <div class="markdown-output" id="markdown-output"></div>
+                    
+                    <div class="instructions">
+                        <h3>How to add this to your GitHub README</h3>
+                        <ol>
+                            <li>Copy the markdown code above using the Copy button</li>
+                            <li>Edit your profile README.md file (usually found at username/username)</li>
+                            <li>Paste the copied markdown code where you want the streak stats to appear</li>
+                            <li>Commit the changes to see your streak stats on your profile!</li>
+                        </ol>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -622,52 +506,12 @@
         Markdown copied to clipboard!
     </div>
 
-    <footer>
-        Created with ❤️ for GitHub users &middot; 
-        <a href="https://github.com/DenverCoder1/github-readme-streak-stats" target="_blank">Based on GitHub Readme Streak Stats</a>
-    </footer>
-
     <script>
-        // Get all theme options
-        const themeOptions = document.querySelectorAll('.theme-option');
-        
-        // Add click event to each theme option
-        themeOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                // Remove selected class from all options
-                themeOptions.forEach(opt => opt.classList.remove('selected'));
-                // Add selected class to clicked option
-                this.classList.add('selected');
-            });
-        });
-        
-        // Toggle advanced options
-        function toggleAdvanced() {
-            const advancedContent = document.querySelector('.advanced-content');
-            const toggleIcon = document.querySelector('.toggle-icon');
-            
-            if (advancedContent.style.display === 'block') {
-                advancedContent.style.display = 'none';
-                toggleIcon.classList.remove('open');
-            } else {
-                advancedContent.style.display = 'block';
-                toggleIcon.classList.add('open');
-            }
-        }
-        
         // Reset form
         function resetForm() {
             document.getElementById('username').value = '';
             document.getElementById('from-date').value = '';
             document.getElementById('to-date').value = '';
-            document.getElementById('locale').value = 'en';
-            document.getElementById('mode').value = 'daily';
-            document.getElementById('hide-total-contributions').value = 'false';
-            document.getElementById('card-width').value = '';
-            
-            // Reset theme selection
-            themeOptions.forEach(opt => opt.classList.remove('selected'));
-            document.querySelector('[data-theme="default"]').classList.add('selected');
             
             // Hide output container
             document.getElementById('output-container').style.display = 'none';
@@ -678,11 +522,6 @@
             const username = document.getElementById('username').value;
             const fromDate = document.getElementById('from-date').value;
             const toDate = document.getElementById('to-date').value;
-            const locale = document.getElementById('locale').value;
-            const mode = document.getElementById('mode').value;
-            const hideTotal = document.getElementById('hide-total-contributions').value;
-            const cardWidth = document.getElementById('card-width').value;
-            const selectedTheme = document.querySelector('.theme-option.selected').getAttribute('data-theme');
             
             if (!username) {
                 showAlert('Please enter a GitHub username', 'error');
@@ -703,31 +542,14 @@
                 widgetUrl += `&to=${toDate}`;
             }
             
-            if (selectedTheme && selectedTheme !== 'default') {
-                widgetUrl += `&theme=${selectedTheme}`;
-            }
-            
-            if (locale && locale !== 'en') {
-                widgetUrl += `&locale=${locale}`;
-            }
-            
-            if (mode && mode !== 'daily') {
-                widgetUrl += `&mode=${mode}`;
-            }
-            
-            if (hideTotal === 'true') {
-                widgetUrl += `&hide_total=true`;
-            }
-            
-            if (cardWidth) {
-                widgetUrl += `&card_width=${cardWidth}`;
-            }
+            // Default theme is set to dark
+            widgetUrl += `&theme=dark`;
             
             // Create markdown
             const markdown = `[![GitHub Streak](${widgetUrl})](https://git.io/streak-stats)`;
             
             // Show output container
-            document.getElementById('output-container').style.display = 'flex';
+            document.getElementById('output-container').style.display = 'block';
             
             // Update markdown output
             document.getElementById('markdown-output').textContent = markdown;
