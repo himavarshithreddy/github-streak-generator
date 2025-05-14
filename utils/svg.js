@@ -7,98 +7,117 @@ export function renderStreakSVG({
   const formatDate = (dateStr) => {
     if (!dateStr) return 'N/A';
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
 
   const currentStreakDates = currentStreak > 0 
-    ? `${formatDate(currentStreakStart)} → ${formatDate(currentStreakEnd)}`
+    ? `${formatDate(currentStreakStart)} - ${formatDate(currentStreakEnd)}`
     : 'No current streak';
 
   const longestStreakDates = longestStreak > 0
-    ? `${formatDate(longestStreakStart)} → ${formatDate(longestStreakEnd)}`
+    ? `${formatDate(longestStreakStart)} - ${formatDate(longestStreakEnd)}`
     : 'No streak data';
     
-  // Calculate percentage for streak bars
+  // Calculate metrics for vertical columns
+  const maxHeight = 100; // Max height for columns
   const maxStreakValue = Math.max(currentStreak, longestStreak, 1);
-  const currentStreakWidth = (currentStreak / maxStreakValue) * 100;
-  const longestStreakWidth = (longestStreak / maxStreakValue) * 100;
+  const currentStreakHeight = (currentStreak / maxStreakValue) * maxHeight;
+  const longestStreakHeight = (longestStreak / maxStreakValue) * maxHeight;
   
-  // Generate contribution history visualization (simplified)
-  const generateContributionGraph = () => {
-    let result = '';
-    const today = new Date();
-    const cellSize = 10;
+  // Generate fake contribution grid (in real implementation would be based on actual data)
+  const generateContributionGrid = () => {
+    const rows = 7; // Days of week
+    const cols = 15; // Last 15 weeks
+    const cellSize = 8;
     const cellGap = 2;
-    const cols = 20; // Display 20 days
+    let result = '';
     
-    for (let i = 0; i < cols; i++) {
-      // Randomize intensity for demo visual (in real use would be based on actual data)
-      const intensity = Math.floor(Math.random() * 5);
-      const fillColor = intensity === 0 ? '#161b22' : 
-                        intensity === 1 ? '#0e4429' :
-                        intensity === 2 ? '#006d32' :
-                        intensity === 3 ? '#26a641' : '#39d353';
-                        
-      result += `<rect x="${300 + i * (cellSize + cellGap)}" y="145" width="${cellSize}" height="${cellSize}" rx="2" fill="${fillColor}" />`;
+    for (let row = 0; row < rows; row++) {
+      for (let col = 0; col < cols; col++) {
+        // Create intensity levels similar to GitHub's contribution graph
+        // In a real implementation, this would be based on actual contribution counts
+        const intensity = Math.floor(Math.random() * 5); 
+        const fillColor = [
+          '#161b22', // No contributions
+          '#0e4429', // Level 1
+          '#006d32', // Level 2 
+          '#26a641', // Level 3
+          '#39d353'  // Level 4
+        ][intensity];
+        
+        result += `<rect 
+          x="${25 + col * (cellSize + cellGap)}" 
+          y="${65 + row * (cellSize + cellGap)}" 
+          width="${cellSize}" 
+          height="${cellSize}" 
+          rx="1.5" 
+          fill="${fillColor}" 
+        />`;
+      }
     }
     return result;
   };
 
   return `
-<svg width="495" height="200" xmlns="http://www.w3.org/2000/svg">
+<svg width="495" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 495 200">
   <style>
-    .title { font: bold 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: #58a6ff; }
-    .subtitle { font: 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #8b949e; }
-    .label { font: 600 14px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
-    .value { font: 16px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
-    .dates { font: 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #8b949e; }
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;display=swap');
+    * { font-family: 'JetBrains Mono', monospace; }
     .bg { fill: #0d1117; }
-    .card { stroke: #30363d; fill: #0d1117; stroke-width: 1; rx: 6; }
-    .section { fill: #161b22; stroke: #30363d; stroke-width: 1; rx: 4; }
-    .bar-bg { fill: #161b22; rx: 4; }
-    .bar-fill { fill: #39d353; rx: 4; }
-    .current-streak { fill: #2ea043; }
-    .longest-streak { fill: #58a6ff; }
-    .total { fill: #c9d1d9; }
-    .icon { font: 14px 'Segoe UI', Ubuntu, Sans-Serif; }
+    .card { fill: #161b22; stroke: #30363d; stroke-width: 1; }
+    .section { fill: #0d1117; stroke: #30363d; stroke-width: 1; }
+    .title { font-size: 16px; font-weight: 700; fill: #e6edf3; }
+    .subtitle { font-size: 12px; fill: #8b949e; }
+    .label { font-size: 12px; font-weight: 600; fill: #c9d1d9; }
+    .stat { font-size: 20px; font-weight: 700; text-anchor: middle; }
+    .stat-label { font-size: 11px; fill: #8b949e; text-anchor: middle; }
+    .dates { font-size: 9px; fill: #8b949e; text-anchor: middle; }
+    .column-current { fill: #238636; }
+    .column-longest { fill: #1f6feb; }
+    .column-total { fill: #6e7681; }
+    .grid-label { font-size: 9px; fill: #8b949e; }
+    .divider { stroke: #30363d; stroke-width: 1; stroke-dasharray: 4 2; }
   </style>
-  <rect width="100%" height="100%" class="bg" rx="6" />
-  <rect x="5" y="5" width="485" height="190" class="card" />
+
+  <!-- Background -->
+  <rect width="100%" height="100%" rx="6" class="bg" />
+  <rect x="5" y="5" width="485" height="190" rx="6" class="card" />
   
-  <text x="25" y="30" class="title">GitHub Contribution Stats</text>
-  <text x="25" y="45" class="subtitle">Developer activity metrics and streak visualization</text>
+  <!-- Header -->
+  <text x="25" y="28" class="title">GitHub Contribution Stats</text>
+  <line x1="25" y1="40" x2="470" y2="40" class="divider" />
   
-  <!-- Current Streak Section -->
-  <rect x="25" y="60" width="445" height="35" class="section" />
-  <text x="35" y="82" class="label">Current Streak</text>
-  <text x="170" y="82" class="value" fill="#2ea043">${currentStreak} days</text>
-  <text x="240" y="82" class="dates">${currentStreakDates}</text>
-  <!-- Current Streak Bar -->
-  <rect x="35" y="90" width="190" height="4" class="bar-bg" />
-  <rect x="35" y="90" width="${currentStreakWidth * 1.9}" height="4" class="bar-fill current-streak" />
+  <!-- Left Section: Contribution Grid -->
+  <rect x="20" y="50" width="165" height="140" rx="4" class="section" />
+  <text x="25" y="60" class="label">Contribution Activity</text>
+  ${generateContributionGrid()}
+  <text x="25" y="175" class="grid-label">Total: ${totalContributions.toLocaleString()} contributions</text>
   
-  <!-- Longest Streak Section -->
-  <rect x="25" y="105" width="445" height="35" class="section" />
-  <text x="35" y="127" class="label">Longest Streak</text>
-  <text x="170" y="127" class="value" fill="#58a6ff">${longestStreak} days</text>
-  <text x="240" y="127" class="dates">${longestStreakDates}</text>
-  <!-- Longest Streak Bar -->
-  <rect x="35" y="135" width="190" height="4" class="bar-bg" />
-  <rect x="35" y="135" width="${longestStreakWidth * 1.9}" height="4" class="bar-fill longest-streak" />
+  <!-- Vertical divider -->
+  <line x1="195" y1="50" x2="195" y2="190" class="divider" />
   
-  <!-- Total Contributions Section -->
-  <rect x="25" y="150" width="445" height="35" class="section" />
-  <text x="35" y="172" class="label">Total Contributions</text>
-  <text x="170" y="172" class="value">${totalContributions.toLocaleString()}</text>
-  <text x="240" y="172" class="subtitle">Recent activity:</text>
+  <!-- Right Section: Stats with Vertical Columns -->
+  <rect x="205" y="50" width="270" height="140" rx="4" class="section" />
   
-  <!-- Simplified contribution graph -->
-  ${generateContributionGraph()}
+  <!-- Current Streak Column -->
+  <rect x="250" y="${145 - currentStreakHeight}" width="40" height="${currentStreakHeight}" rx="3" class="column-current" />
+  <text x="270" y="160" class="stat-label">CURRENT</text>
+  <text x="270" y="172" class="stat-label">STREAK</text>
+  <text x="270" y="${135 - currentStreakHeight}" class="stat" fill="#238636">${currentStreak}</text>
+  <text x="270" y="185" class="dates" style="font-size: 8px;">${currentStreakDates}</text>
   
-  <!-- Icons -->
-  <text x="20" y="82" class="icon" fill="#2ea043">🔥</text>
-  <text x="20" y="127" class="icon" fill="#58a6ff">🏆</text>
-  <text x="20" y="172" class="icon" fill="#c9d1d9">📊</text>
+  <!-- Longest Streak Column -->
+  <rect x="320" y="${145 - longestStreakHeight}" width="40" height="${longestStreakHeight}" rx="3" class="column-longest" />
+  <text x="340" y="160" class="stat-label">LONGEST</text>
+  <text x="340" y="172" class="stat-label">STREAK</text>
+  <text x="340" y="${135 - longestStreakHeight}" class="stat" fill="#1f6feb">${longestStreak}</text>
+  <text x="340" y="185" class="dates" style="font-size: 8px;">${longestStreakDates}</text>
+  
+  <!-- Total Column (static height but visually balanced) -->
+  <rect x="390" y="75" width="40" height="70" rx="3" class="column-total" />
+  <text x="410" y="160" class="stat-label">TOTAL</text>
+  <text x="410" y="172" class="stat-label">COMMITS</text>
+  <text x="410" y="65" class="stat" fill="#6e7681">${totalContributions.toLocaleString()}</text>
 </svg>
   `;
 }
