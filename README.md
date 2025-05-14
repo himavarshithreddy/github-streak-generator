@@ -22,7 +22,7 @@ To use it:
 
     The Markdown will look like this:
     ```markdown
-    [![GitHub Streak]([https://github-streak-generator.vercel.app/]/api/streak/svg?username=your-username)]
+    [![GitHub Streak]([https://github-streak-generator.vercel.app/]/api/streak/svg?username=your-username)(https://github.com/username)]
     ```
     (Just replace `your-username` with the GitHub username. You can also add `&from=YYYY-MM-DD&to=YYYY-MM-DD` for date ranges to the image URL.)
 
