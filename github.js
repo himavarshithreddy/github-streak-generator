@@ -63,13 +63,15 @@ export async function getContributionData(username, token, from, to) {
     });
   }
 
-  return contributionMap;
+  // Return both the map and the overall startDate for the period
+  return { contributionMap, overallStartDate: startDate.toISOString() };
 }
 
 /**
  * Calculate total contributions, current streak, and longest streak
  */
-export function calculateStreaks(contributionMap) {
+export function calculateStreaks(data) {
+  const { contributionMap, overallStartDate } = data;
   const allDates = Object.keys(contributionMap);
   if (allDates.length === 0) {
     return {
@@ -79,7 +81,8 @@ export function calculateStreaks(contributionMap) {
       currentStreakEnd: null,
       longestStreak: 0,
       longestStreakStart: null,
-      longestStreakEnd: null
+      longestStreakEnd: null,
+      contributionsStartDate: overallStartDate
     };
   }
 
@@ -136,6 +139,7 @@ export function calculateStreaks(contributionMap) {
     currentStreakEnd: lastDay,
     longestStreak: longest.length,
     longestStreakStart: longest.start,
-    longestStreakEnd: longest.end
+    longestStreakEnd: longest.end,
+    contributionsStartDate: overallStartDate
   };
 }

@@ -30,8 +30,10 @@ app.get("/api/streak/:username/svg", async (req, res) => {
   const { username } = req.params;
   const { from, to } = req.query;
   try {
-    const data = await getContributionData(username, process.env.GITHUB_TOKEN, from, to);
-    const stats = calculateStreaks(data);
+    // getContributionData now returns an object: { contributionMap, overallStartDate }
+    const contributionData = await getContributionData(username, process.env.GITHUB_TOKEN, from, to);
+    // calculateStreaks expects this object and will return contributionsStartDate in its result
+    const stats = calculateStreaks(contributionData);
     const {
       totalContributions,
       currentStreak,
@@ -39,18 +41,20 @@ app.get("/api/streak/:username/svg", async (req, res) => {
       currentStreakEnd,
       longestStreak,
       longestStreakStart,
-      longestStreakEnd
+      longestStreakEnd,
+      contributionsStartDate // Destructure contributionsStartDate from stats
     } = stats;
 
     const svg = renderStreakSVG({
-      username,
+      username, // username is from req.params, not from stats
       totalContributions,
       currentStreak,
       currentStreakStart,
       currentStreakEnd,
       longestStreak,
       longestStreakStart,
-      longestStreakEnd
+      longestStreakEnd,
+      contributionsStartDate // Pass it here
     });
 
     res.setHeader("Content-Type", "image/svg+xml");
