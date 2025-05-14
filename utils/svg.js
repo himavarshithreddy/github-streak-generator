@@ -18,13 +18,20 @@ export function renderStreakSVG({
     ? `${formatDate(longestStreakStart)} → ${formatDate(longestStreakEnd)}`
     : 'No streak data';
 
+  // For total contributions, use the earliest and latest dates available
+  const totalStartDate = [currentStreakStart, longestStreakStart].filter(Boolean).sort()[0];
+  const totalEndDate = currentStreakEnd || longestStreakEnd;
+  const totalContributionDates = totalStartDate && totalEndDate
+    ? `${formatDate(totalStartDate)} → ${formatDate(totalEndDate)}`
+    : 'All time';
+
   return `
 <svg width="400" height="160" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
   <style>
     .bg { fill: #13111C; rx: 10; }
     .card { fill: #1A1825; rx: 8; }
     .stat-circle { fill: #22202D; }
-    .label { font: 500 11px ui-monospace, SFMono-Regular, monospace; fill: #A2A0B3; }
+    .label { font: 500 9px ui-monospace, SFMono-Regular, monospace; fill: #A2A0B3; }
     .sublabel { font: 400 8px ui-monospace, SFMono-Regular, monospace; fill: #6E6C7E; }
     .value { font: 700 22px ui-monospace, SFMono-Regular, monospace; fill: #E2E1E8; }
     .unit { font: 400 9px ui-monospace, SFMono-Regular, monospace; fill: #6E6C7E; }
@@ -41,8 +48,8 @@ export function renderStreakSVG({
   <g transform="translate(67, 65)">
     <!-- Total contributions -->
     <circle cx="0" cy="0" r="40" class="stat-circle" />
-    <text x="0" y="5" class="value total" text-anchor="middle">${totalContributions}</text>
-    <text x="0" y="22" class="unit" text-anchor="middle">contributions</text>
+    <text x="0" y="0" class="value total" text-anchor="middle">${totalContributions}</text>
+    <text x="0" y="15" class="unit" text-anchor="middle">contrib</text>
   </g>
 
   <g transform="translate(200, 65)">
@@ -61,10 +68,11 @@ export function renderStreakSVG({
 
   <!-- Labels -->
   <text x="67" y="118" class="label" text-anchor="middle">Total Contributions</text>
+  <text x="67" y="132" class="sublabel" text-anchor="middle" textLength="100" lengthAdjust="spacingAndGlyphs">${totalContributionDates}</text>
   <text x="200" y="118" class="label" text-anchor="middle">Current Streak</text>
-  <text x="200" y="132" class="sublabel" text-anchor="middle" textLength="120" lengthAdjust="spacingAndGlyphs">${currentStreakDates}</text>
+  <text x="200" y="132" class="sublabel" text-anchor="middle" textLength="110" lengthAdjust="spacingAndGlyphs">${currentStreakDates}</text>
   <text x="333" y="118" class="label" text-anchor="middle">Longest Streak</text>
-  <text x="333" y="132" class="sublabel" text-anchor="middle" textLength="120" lengthAdjust="spacingAndGlyphs">${longestStreakDates}</text>
+  <text x="320" y="132" class="sublabel" text-anchor="middle" textLength="100" lengthAdjust="spacingAndGlyphs">${longestStreakDates}</text>
 </svg>
   `;
 }
