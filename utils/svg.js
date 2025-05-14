@@ -30,7 +30,7 @@ export function renderStreakSVG({
     .label { font: 500 9px ui-monospace, SFMono-Regular, monospace; fill: #A2A0B3; }
     .sublabel { font: 400 8px ui-monospace, SFMono-Regular, monospace; fill: #6E6C7E; }
     .value { font: 700 22px ui-monospace, SFMono-Regular, monospace; fill: #E2E1E8; }
-    .unit { font: 400 9px ui-monospace, SFMono-Regular, monospace; fill: #6E6C7E; }
+    .unit { font: 370 8px ui-monospace, SFMono-Regular, monospace; fill: #6E6C7E; }
     .total { fill: #66BB6A; }
     .current { fill: #FF7043; }
     .longest { fill: #FFD54F; }
