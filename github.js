@@ -1,4 +1,4 @@
-const { request, gql } = require("graphql-request");
+import { request, gql } from "graphql-request";
 
 const ENDPOINT = "https://api.github.com/graphql";
 
@@ -37,7 +37,7 @@ async function fetchContributionWindow(username, token, from, to) {
  * @param {string} [from] ISO date string; defaults to now minus 1 year
  * @param {string} [to] ISO date string; defaults to now
  */
-async function getContributionData(username, token, from, to) {
+export async function getContributionData(username, token, from, to) {
   const now = new Date();
   const endDate = to ? new Date(to) : now;
   const startDate = from ? new Date(from) : new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
@@ -50,7 +50,6 @@ async function getContributionData(username, token, from, to) {
     windowEnd.setFullYear(windowEnd.getFullYear() + 1);
     if (windowEnd > endDate) windowEnd.setTime(endDate.getTime());
     windows.push({ from: windowStart.toISOString(), to: windowEnd.toISOString() });
-    // next window starts one day after current windowEnd
     windowStart = new Date(windowEnd);
     windowStart.setDate(windowStart.getDate() + 1);
   }
@@ -70,7 +69,7 @@ async function getContributionData(username, token, from, to) {
 /**
  * Calculate total contributions, current streak, and longest streak
  */
-function calculateStreaks(contributionMap) {
+export function calculateStreaks(contributionMap) {
   const allDates = Object.keys(contributionMap);
   if (allDates.length === 0) {
     return {
@@ -84,10 +83,8 @@ function calculateStreaks(contributionMap) {
     };
   }
 
-  // Compute total contributions
   const totalContributions = allDates.reduce((sum, date) => sum + contributionMap[date], 0);
 
-  // Build streaks for longest calculation
   const sortedDates = allDates.sort((a, b) => new Date(a) - new Date(b));
   const streaks = [];
   let streak = { start: null, end: null, length: 0 };
@@ -112,11 +109,9 @@ function calculateStreaks(contributionMap) {
     }
   }
 
-  // Identify longest streak
   let longest = { start: null, end: null, length: 0 };
   streaks.forEach(s => { if (s.length > longest.length) longest = s; });
 
-  // Calculate current streak from last positive day
   const positiveDays = sortedDates.filter(d => contributionMap[d] > 0);
   const lastDay = positiveDays[positiveDays.length - 1];
   let cursor = new Date(lastDay);
@@ -144,8 +139,3 @@ function calculateStreaks(contributionMap) {
     longestStreakEnd: longest.end
   };
 }
-
-module.exports = {
-  getContributionData,
-  calculateStreaks,
-};

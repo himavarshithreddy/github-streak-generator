@@ -1,4 +1,4 @@
-function renderStreakSVG({ 
+export function renderStreakSVG({ 
   currentStreak, currentStreakStart, currentStreakEnd,
   longestStreak, longestStreakStart, longestStreakEnd,
   totalContributions, username 
@@ -48,5 +48,3 @@ function renderStreakSVG({
 </svg>
   `;
 }
-
-module.exports = { renderStreakSVG };

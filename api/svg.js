@@ -1,9 +1,8 @@
-const { getContributionData, calculateStreaks } = require('../github');
-const { renderStreakSVG } = require('../utils/svg');
+import { getContributionData, calculateStreaks } from '../github.js';
+import { renderStreakSVG } from '../utils/svg.js';
 
-module.exports = async (req, res) => {
-  const username = req.query.username;
-  const { from, to } = req.query;
+export default async function handler(req, res) {
+  const { username, from, to } = req.query;
 
   if (!username) {
     res.status(400).send('<svg><text>Username is required</text></svg>');
@@ -20,4 +19,4 @@ module.exports = async (req, res) => {
   } catch (err) {
     res.status(500).send(`<svg><text>Error: ${err.message}</text></svg>`);
   }
-};
+}

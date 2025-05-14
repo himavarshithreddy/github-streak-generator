@@ -1,12 +1,12 @@
-const { getContributionData, calculateStreaks } = require('../github');
+import { getContributionData, calculateStreaks } from '../github.js';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   const {
     query: { from, to },
-    method,
   } = req;
 
   const username = req.query.username || req.query.user || null;
+
   if (!username) {
     res.status(400).json({ error: 'Username is required' });
     return;
@@ -19,4 +19,4 @@ module.exports = async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Unable to fetch streak data', details: err.message });
   }
-};
+}
