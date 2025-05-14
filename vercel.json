@@ -1,0 +1,11 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "api/*.js", "use": "@vercel/node" }
+    ],
+    "routes": [
+      { "src": "/api/streak", "dest": "api/streak.js" },
+      { "src": "/api/streak/svg", "dest": "api/svg.js" }
+    ]
+  }
+  
