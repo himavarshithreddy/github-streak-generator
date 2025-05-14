@@ -135,8 +135,6 @@
         
         .input-wrapper {
             position: relative;
-            display: flex;
-            align-items: center;
         }
         
         input[type="text"],
@@ -160,8 +158,10 @@
         }
         
         .input-tooltip {
-            position: relative;
-            margin-left: 10px;
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
             color: var(--text-secondary);
             cursor: help;
         }
@@ -404,17 +404,13 @@
             padding: 10px 0;
             text-align: center;
             border-top: 1px solid var(--border-color);
-            margin-top: 40px;
-            font-size: 14px;
+            margin-top: 30px;
+            font-size: 12px;
             color: var(--text-secondary);
-            height: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
         
         .footer p {
-            margin: 5px 0;
+            margin: 3px 0;
         }
         
         .footer a {
@@ -484,14 +480,6 @@
                     <label for="username"><span class="code-keyword">const</span> username = <span class="code-string">"yourUsername"</span>;</label>
                     <div class="input-wrapper">
                         <input type="text" id="username" name="username" placeholder="GitHub Username" autocomplete="off">
-                        <div class="input-tooltip tooltip">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
-                            <span class="tooltiptext">Enter your GitHub username to generate your streak statistics</span>
-                        </div>
                     </div>
                 </div>
                 
@@ -564,8 +552,8 @@
     </div>
 
     <div class="footer">
-        <p><span class="code-comment">/* Made by Himavarshith Reddy */</span></p>
         <p>
+            <span class="code-comment">/* Made by Himavarshith Reddy */</span>
             <span class="code-keyword">function</span> <span class="code-function">keepCoding</span><span class="code-bracket">()</span> <span class="code-bracket">{</span> 
             <a href="https://github.com/himavarshithreddy" target="_blank">GitHub</a> <span class="code-bracket">}</span>
         </p>
