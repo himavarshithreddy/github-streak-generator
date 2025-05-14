@@ -3,6 +3,7 @@ export function renderStreakSVG({
   longestStreak, longestStreakStart, longestStreakEnd,
   totalContributions
 }) {
+  // Format dates if they exist
   const formatDate = (dateStr) => {
     if (!dateStr) return 'N/A';
     const date = new Date(dateStr);
@@ -30,35 +31,37 @@ export function renderStreakSVG({
     .footer { font: 9px 'Inter', 'Arial', sans-serif; fill: #888888; }
   </style>
 
+  <!-- Gradient for dividers -->
   <defs>
     <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#3A3A3A;stop-opacity:0.3" />
-      <stop offset="100%" style="stop-color:#3A3A3A;stop-opacity:0.3" />
+      <stop offset="0%" style="stop-color:#3A3A3A;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#3A3A3A;stop-opacity:0.2" />
     </linearGradient>
   </defs>
 
+  <!-- Background and card -->
   <rect width="100%" height="100%" class="bg" rx="10"/>
   <rect x="10" y="10" width="430" height="140" class="card"/>
 
-  <!-- Dividers -->
-  <line x1="150" y1="20" x2="150" y2="140" class="divider"/>
-  <line x1="300" y1="20" x2="300" y2="140" class="divider"/>
+  <!-- Vertical dividers -->
+  <line x1="145" y1="20" x2="145" y2="140" class="divider"/>
+  <line x1="305" y1="20" x2="305" y2="140" class="divider"/>
 
-  <!-- Left: Total Contributions -->
-  <text x="75" y="60" class="label" text-anchor="middle">Total</text>
-  <text x="75" y="90" class="value" text-anchor="middle">${totalContributions}</text>
-  <text x="75" y="115" class="dates" text-anchor="middle">Contributions</text>
+  <!-- Column 1: Total Contributions -->
+  <text x="72.5" y="80" class="label" text-anchor="middle">Total</text>
+  <text x="72.5" y="105" class="value" text-anchor="middle">${totalContributions}</text>
+  <text x="72.5" y="128" class="dates" text-anchor="middle">Contributions</text>
 
-  <!-- Center: Current Streak -->
-  <path class="icon" transform="translate(215, 20) scale(0.04)" d="M216 23.86c0-23.8-30.65-32.77-44.15-13.04C48 191.85 224 200 224 288c0 35.63-29.11 64.46-64.85 63.99-35.17-.45-63.15-29.77-63.15-64.94v-85.51c0-21.7-26.47-32.23-41.43-16.5C27.8 213.16 0 261.33 0 320c0 105.87 86.13 192 192 192s192-86.13 192-192c0-170.29-168-193-168-296.14z"/>
-  <text x="225" y="75" class="label" text-anchor="middle">Current Streak</text>
-  <text x="225" y="100" class="value" text-anchor="middle">${currentStreak}</text>
-  <text x="225" y="122" class="dates" text-anchor="middle" textLength="140" lengthAdjust="spacingAndGlyphs">${currentStreakDates}</text>
+  <!-- Column 2: Current Streak - Flame icon -->
+  <path class="icon" transform="translate(205, 30) scale(0.04)" d="M216 23.86c0-23.8-30.65-32.77-44.15-13.04C48 191.85 224 200 224 288c0 35.63-29.11 64.46-64.85 63.99-35.17-.45-63.15-29.77-63.15-64.94v-85.51c0-21.7-26.47-32.23-41.43-16.5C27.8 213.16 0 261.33 0 320c0 105.87 86.13 192 192 192s192-86.13 192-192c0-170.29-168-193-168-296.14z"/>
+  <text x="225" y="80" class="label" text-anchor="middle">Current Streak</text>
+  <text x="225" y="105" class="value" text-anchor="middle">${currentStreak}</text>
+  <text x="230" y="128" class="dates" text-anchor="middle" textLength="120" lengthAdjust="spacingAndGlyphs">${currentStreakDates}</text>
 
-  <!-- Right: Longest Streak -->
-  <text x="370" y="60" class="label" text-anchor="middle">Longest Streak</text>
-  <text x="370" y="90" class="value" text-anchor="middle">${longestStreak}</text>
-  <text x="370" y="115" class="dates" text-anchor="middle" textLength="120" lengthAdjust="spacingAndGlyphs">${longestStreakDates}</text>
+  <!-- Column 3: Longest Streak -->
+  <text x="377.5" y="80" class="label" text-anchor="middle">Longest Streak</text>
+  <text x="377.5" y="105" class="value" text-anchor="middle">${longestStreak}</text>
+  <text x="377.5" y="128" class="dates" text-anchor="middle" textLength="120" lengthAdjust="spacingAndGlyphs">${longestStreakDates}</text>
 
   <!-- Footer -->
   <text x="225" y="145" class="footer" text-anchor="middle">GitHub Contribution Stats</text>
