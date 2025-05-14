@@ -25,7 +25,7 @@ export function renderStreakSVG({
     : 'No streak data';
 
   return `
-<svg width="400" height="160" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
+<svg width="500" height="200" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg">
   <style>
     .bg { fill: #13111C; rx: 10; }
     .card { fill: #1A1825; rx: 8; }
