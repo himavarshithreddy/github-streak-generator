@@ -19,30 +19,64 @@ export function renderStreakSVG({
     : 'No streak data';
 
   return `
-<svg width="495" height="185" xmlns="http://www.w3.org/2000/svg">
+<svg width="495" height="195" xmlns="http://www.w3.org/2000/svg">
   <style>
-    .title { font: bold 20px 'Consolas', 'Courier New', monospace; fill: #00A0FF; }
-    .label { font: bold 16px 'Consolas', 'Courier New', monospace; fill: #ABB2BF; }
-    .value { font: 16px 'Consolas', 'Courier New', monospace; fill: #E0E0E0; }
-    .bg { fill: #282C34; }
-    .card { stroke: #1C1E24; fill: #21252B; stroke-width: 1; rx: 6; }
-    .fire { font-size: 24px; fill: #FFD700; }
+    .bg { fill: #1E1E1E; }
+    .card { stroke: #3E3E42; fill: #252526; stroke-width: 1; rx: 6; }
+    .title { font: bold 20px 'Consolas', 'Courier New', monospace; fill: #569CD6; }
+    .label { font: bold 16px 'Consolas', 'Courier New', monospace; fill: #9CDCFE; }
+    .value { font: 16px 'Consolas', 'Courier New', monospace; fill: #D4D4D4; }
+    .dates { font: 13px 'Consolas', 'Courier New', monospace; fill: #CE9178; }
+    .fire { font-size: 24px; fill: #DCDCAA; }
+    .bracket { fill: #D4D4D4; }
+    .keyword { fill: #569CD6; }
+    .function { fill: #DCDCAA; }
+    .comment { fill: #6A9955; }
+    .grid-line { stroke: #3E3E42; stroke-width: 0.5; stroke-dasharray: 2,2; }
   </style>
+  
+  <!-- Background and card -->
   <rect width="100%" height="100%" class="bg" rx="10" ry="10"/>
-  <rect x="10" y="10" width="475" height="165" class="card"/>
+  <rect x="10" y="10" width="475" height="175" class="card"/>
   
-  <text x="25" y="35" class="title">🔥 GitHub Contribution Streaks</text>
+  <!-- Grid decoration in background (like IDE) -->
+  <line x1="20" y1="45" x2="475" y2="45" class="grid-line" />
+  <line x1="20" y1="110" x2="475" y2="110" class="grid-line" />
   
-  <text x="25" y="80" class="label">Current Streak:</text>
-  <text x="180" y="80" class="value fire">${currentStreak} days</text>
-  <text x="25" y="100" class="value" font-size="13">${currentStreakDates}</text>
+  <!-- Title with code style -->
+  <text x="25" y="35" class="title">
+    <tspan class="comment">// </tspan>
+    <tspan>GitHub</tspan>
+    <tspan class="function">.contributionStats</tspan>
+    <tspan class="bracket">()</tspan>
+  </text>
   
-  <text x="25" y="130" class="label">Longest Streak:</text>
-  <text x="180" y="130" class="value fire">${longestStreak} days</text>
-  <text x="25" y="150" class="value" font-size="13">${longestStreakDates}</text>
-
-  <text x="25" y="170" class="label">Total Contributions:</text>
-  <text x="200" y="170" class="value fire">${totalContributions}</text>
+  <!-- Current Streak -->
+  <text x="25" y="70" class="label">
+    <tspan class="keyword">const</tspan> currentStreak = 
+    <tspan class="bracket">{</tspan>
+  </text>
+  <text x="155" y="70" class="value fire">${currentStreak} days</text>
+  <text x="30" y="90" class="dates">
+    <tspan class="comment">// </tspan>${currentStreakDates}
+  </text>
+  
+  <!-- Longest Streak -->
+  <text x="25" y="130" class="label">
+    <tspan class="keyword">const</tspan> longestStreak = 
+    <tspan class="bracket">{</tspan>
+  </text>
+  <text x="155" y="130" class="value fire">${longestStreak} days</text>
+  <text x="30" y="150" class="dates">
+    <tspan class="comment">// </tspan>${longestStreakDates}
+  </text>
+  
+  <!-- Total Contributions -->
+  <text x="25" y="180" class="label">
+    <tspan class="keyword">const</tspan> totalContributions = 
+    <tspan class="bracket">{</tspan>
+  </text>
+  <text x="210" y="180" class="value fire">${totalContributions}</text>
 </svg>
   `;
 }
