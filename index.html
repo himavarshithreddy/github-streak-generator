@@ -156,36 +156,24 @@
             padding-right: 38px;
             color-scheme: dark;
         }
-        /* Hide default calendar icon in Chrome */
+        /* Show the calendar picker indicator but make it transparent, so it's clickable */
         input[type="date"]::-webkit-calendar-picker-indicator {
-            opacity: 0;
+            opacity: 0.01;
             width: 38px;
             cursor: pointer;
             position: relative;
             z-index: 2;
             pointer-events: auto;
         }
-        input[type="date"]::-webkit-input-placeholder {
-            opacity: 1;
-        }
-        input[type="date"]::-ms-input-placeholder {
-            opacity: 1;
-        }
-        input[type="date"]::-moz-placeholder {
-            opacity: 1;
-        }
-        input[type="date"]:after {
-            content: '';
-        }
-        /* Hide default calendar icon in Firefox */
+        /* For Firefox, do not hide the calendar picker indicator completely */
         input[type="date"]::-moz-calendar-picker-indicator {
-            opacity: 0;
+            opacity: 0.01;
             width: 38px;
             cursor: pointer;
         }
-        /* Hide default calendar icon in Edge/IE */
-        input[type="date"]::-ms-input-placeholder {
-            opacity: 0;
+        /* Remove background SVG on focus to avoid double icon on some browsers */
+        input[type="date"]:focus {
+            background-image: none;
         }
         
         input[type="text"]:focus,
