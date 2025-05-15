@@ -151,6 +151,23 @@
             line-height: 20px;
         }
         
+        /* Add specific styling for date input */
+        input[type="date"] {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(0.8);
+            cursor: pointer;
+            padding: 4px;
+            margin-right: 4px;
+        }
+        
+        input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            filter: invert(1);
+        }
+        
         input[type="text"]:focus,
         input[type="date"]:focus {
             outline: none;
