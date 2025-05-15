@@ -161,6 +161,21 @@
             opacity: 0;
             width: 38px;
             cursor: pointer;
+            position: relative;
+            z-index: 2;
+            pointer-events: auto;
+        }
+        input[type="date"]::-webkit-input-placeholder {
+            opacity: 1;
+        }
+        input[type="date"]::-ms-input-placeholder {
+            opacity: 1;
+        }
+        input[type="date"]::-moz-placeholder {
+            opacity: 1;
+        }
+        input[type="date"]:after {
+            content: '';
         }
         /* Hide default calendar icon in Firefox */
         input[type="date"]::-moz-calendar-picker-indicator {
