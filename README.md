@@ -1,4 +1,4 @@
-# My GitHub Streak SVG Generator
+# GitHub Streak SVG Generator
 
 Welcome! With this project, I've created a tool to generate a dynamic SVG image displaying your GitHub contribution streak statistics. I also provide a simple web interface to help you get the Markdown needed to embed this SVG into your GitHub profile README or any other Markdown file.
 
