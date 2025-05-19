@@ -687,6 +687,10 @@
         
         // Set default to-date as today
         document.getElementById('to-date').value = today;
+        const aYearAgo = new Date();
+      aYearAgo.setFullYear(aYearAgo.getFullYear() - 1);
+      const oneYearAgoStr = aYearAgo.toISOString().split('T')[0];
+      document.getElementById('from-date').value = oneYearAgoStr;
     </script>
 </body>
 </html>
