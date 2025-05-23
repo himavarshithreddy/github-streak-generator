@@ -132,11 +132,22 @@ export function calculateStreaks(data) {
     }
   }
 
+  // Ensure current streak is only non-zero if last contribution was today
+  const today = new Date().toISOString().slice(0, 10);
+  let currentStreak = currentCount;
+  let currentStreakStart = currentStart;
+  let currentStreakEnd = lastDay;
+  if (lastDay !== today) {
+    currentStreak = 0;
+    currentStreakStart = null;
+    currentStreakEnd = null;
+  }
+
   return {
     totalContributions,
-    currentStreak: currentCount,
-    currentStreakStart: currentStart,
-    currentStreakEnd: lastDay,
+    currentStreak,
+    currentStreakStart,
+    currentStreakEnd,
     longestStreak: longest.length,
     longestStreakStart: longest.start,
     longestStreakEnd: longest.end,
