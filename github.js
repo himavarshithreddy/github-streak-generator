@@ -132,12 +132,20 @@ export function calculateStreaks(data) {
     }
   }
 
-  // Ensure current streak is only non-zero if last contribution was today
-  const today = new Date().toISOString().slice(0, 10);
+  // Ensure current streak is only non-zero if last contribution was recent
+  // We use a more timezone-friendly approach by checking if the last contribution
+  // was within the last 48 hours to account for timezone differences
+  const now = new Date();
+  const lastContribDate = new Date(lastDay + 'T23:59:59.999Z'); // End of the contribution day in UTC
+  const hoursSinceLastContrib = (now - lastContribDate) / (1000 * 60 * 60);
+  
   let currentStreak = currentCount;
   let currentStreakStart = currentStart;
   let currentStreakEnd = lastDay;
-  if (lastDay !== today) {
+  
+  // If last contribution was more than 48 hours ago, reset current streak
+  // This allows for timezone differences while still being reasonable
+  if (hoursSinceLastContrib > 48) {
     currentStreak = 0;
     currentStreakStart = null;
     currentStreakEnd = null;
