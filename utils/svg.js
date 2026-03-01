@@ -56,7 +56,6 @@ export function renderStreakSVG({
     .stat-ring { fill: none; stroke-width: 2.5; opacity: 0.15; }
     .stat-ring-active { fill: none; stroke-width: 2.5; stroke-dasharray: 120 200; stroke-linecap: round; } /* 120px visible arc out of ~251px circumference for decorative partial ring */
     .stat-circle { fill: #21262D; }
-    .title { font: 600 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #E6EDF3; }
     .label { font: 600 9.5px -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #C9D1D9; }
     .sublabel { font: 400 7px -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #6E7681; }
     .value { font: 700 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
@@ -75,19 +74,8 @@ export function renderStreakSVG({
   <rect width="500" height="200" rx="12" class="bg" />
   <rect width="500" height="200" rx="12" class="border" />
 
-  <!-- Title bar with GitHub icon -->
-  <g transform="translate(20, 28)">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="#8B949E">
-      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-    </svg>
-    <text x="22" y="13" class="title">GitHub Streak Stats</text>
-  </g>
-
-  <!-- Divider line under title -->
-  <line x1="20" y1="46" x2="480" y2="46" class="separator" />
-
   <!-- Total contributions -->
-  <g transform="translate(83, 112)">
+  <g transform="translate(83, 87)">
     <circle cx="0" cy="0" r="36" class="stat-circle" />
     <circle cx="0" cy="0" r="40" class="stat-ring total-ring" />
     <circle cx="0" cy="0" r="40" class="stat-ring-active total-ring" transform="rotate(-90)" /> <!-- Rotate to start arc from top -->
@@ -96,10 +84,10 @@ export function renderStreakSVG({
   </g>
 
   <!-- Separator -->
-  <line x1="167" y1="60" x2="167" y2="180" class="separator" />
+  <line x1="167" y1="35" x2="167" y2="155" class="separator" />
 
   <!-- Current streak -->
-  <g transform="translate(250, 112)">
+  <g transform="translate(250, 87)">
     <circle cx="0" cy="0" r="36" class="stat-circle" />
     <circle cx="0" cy="0" r="40" class="stat-ring current-ring" />
     <circle cx="0" cy="0" r="40" class="stat-ring-active current-ring" transform="rotate(-90)" /> <!-- Rotate to start arc from top -->
@@ -108,10 +96,10 @@ export function renderStreakSVG({
   </g>
 
   <!-- Separator -->
-  <line x1="333" y1="60" x2="333" y2="180" class="separator" />
+  <line x1="333" y1="35" x2="333" y2="155" class="separator" />
 
   <!-- Longest streak -->
-  <g transform="translate(417, 112)">
+  <g transform="translate(417, 87)">
     <circle cx="0" cy="0" r="36" class="stat-circle" />
     <circle cx="0" cy="0" r="40" class="stat-ring longest-ring" />
     <circle cx="0" cy="0" r="40" class="stat-ring-active longest-ring" transform="rotate(-90)" /> <!-- Rotate to start arc from top -->
@@ -120,12 +108,12 @@ export function renderStreakSVG({
   </g>
 
   <!-- Labels -->
-  <text x="83" y="165" class="label" text-anchor="middle">Total Contributions</text>
-  <text x="83" y="178" class="sublabel" text-anchor="middle">${totalContributionsDates}</text>
-  <text x="250" y="165" class="label" text-anchor="middle">Current Streak</text>
-  <text x="250" y="178" class="sublabel" text-anchor="middle">${currentStreakDates}</text>
-  <text x="417" y="165" class="label" text-anchor="middle">Longest Streak</text>
-  <text x="417" y="178" class="sublabel" text-anchor="middle">${longestStreakDates}</text>
+  <text x="83" y="140" class="label" text-anchor="middle">Total Contributions</text>
+  <text x="83" y="153" class="sublabel" text-anchor="middle">${totalContributionsDates}</text>
+  <text x="250" y="140" class="label" text-anchor="middle">Current Streak</text>
+  <text x="250" y="153" class="sublabel" text-anchor="middle">${currentStreakDates}</text>
+  <text x="417" y="140" class="label" text-anchor="middle">Longest Streak</text>
+  <text x="417" y="153" class="sublabel" text-anchor="middle">${longestStreakDates}</text>
 </svg>
   `;
 }
