@@ -13,15 +13,15 @@ export function renderStreakSVG({
   // For total contributions, use contributionsStartDate if provided
   const totalContributionsEndDate = currentStreakEnd || new Date();
   const totalContributionsDates = contributionsStartDate
-    ? `${formatDate(contributionsStartDate)} - ${formatDate(totalContributionsEndDate)}`
+    ? `${formatDate(contributionsStartDate)} – ${formatDate(totalContributionsEndDate)}`
     : 'All time';
 
   const currentStreakDates = currentStreak > 0
-    ? `${formatDate(currentStreakStart)} - ${formatDate(currentStreakEnd)}`
+    ? `${formatDate(currentStreakStart)} – ${formatDate(currentStreakEnd)}`
     : 'No current streak';
 
   const longestStreakDates = longestStreak > 0
-    ? `${formatDate(longestStreakStart)} - ${formatDate(longestStreakEnd)}`
+    ? `${formatDate(longestStreakStart)} – ${formatDate(longestStreakEnd)}`
     : 'No streak data';
 
   return `
@@ -54,7 +54,7 @@ export function renderStreakSVG({
   <style>
     .bg { fill: url(#bgGrad); }
     .stat-ring { fill: none; stroke-width: 2.5; opacity: 0.15; }
-    .stat-ring-active { fill: none; stroke-width: 2.5; stroke-dasharray: 120 200; stroke-linecap: round; }
+    .stat-ring-active { fill: none; stroke-width: 2.5; stroke-dasharray: 120 200; stroke-linecap: round; } /* 120px visible arc out of ~251px circumference for decorative partial ring */
     .stat-circle { fill: #21262D; }
     .title { font: 600 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #E6EDF3; }
     .label { font: 600 9.5px -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; fill: #C9D1D9; }
@@ -90,7 +90,7 @@ export function renderStreakSVG({
   <g transform="translate(83, 112)">
     <circle cx="0" cy="0" r="36" class="stat-circle" />
     <circle cx="0" cy="0" r="40" class="stat-ring total-ring" />
-    <circle cx="0" cy="0" r="40" class="stat-ring-active total-ring" transform="rotate(-90)" />
+    <circle cx="0" cy="0" r="40" class="stat-ring-active total-ring" transform="rotate(-90)" /> <!-- Rotate to start arc from top -->
     <text x="0" y="-2" class="value total-val" text-anchor="middle" filter="url(#glow)">${totalContributions}</text>
     <text x="0" y="14" class="unit" text-anchor="middle">contributions</text>
   </g>
@@ -102,7 +102,7 @@ export function renderStreakSVG({
   <g transform="translate(250, 112)">
     <circle cx="0" cy="0" r="36" class="stat-circle" />
     <circle cx="0" cy="0" r="40" class="stat-ring current-ring" />
-    <circle cx="0" cy="0" r="40" class="stat-ring-active current-ring" transform="rotate(-90)" />
+    <circle cx="0" cy="0" r="40" class="stat-ring-active current-ring" transform="rotate(-90)" /> <!-- Rotate to start arc from top -->
     <text x="0" y="-2" class="value current-val" text-anchor="middle" filter="url(#glow)">${currentStreak}</text>
     <text x="0" y="14" class="unit" text-anchor="middle">days</text>
   </g>
@@ -114,7 +114,7 @@ export function renderStreakSVG({
   <g transform="translate(417, 112)">
     <circle cx="0" cy="0" r="36" class="stat-circle" />
     <circle cx="0" cy="0" r="40" class="stat-ring longest-ring" />
-    <circle cx="0" cy="0" r="40" class="stat-ring-active longest-ring" transform="rotate(-90)" />
+    <circle cx="0" cy="0" r="40" class="stat-ring-active longest-ring" transform="rotate(-90)" /> <!-- Rotate to start arc from top -->
     <text x="0" y="-2" class="value longest-val" text-anchor="middle" filter="url(#glow)">${longestStreak}</text>
     <text x="0" y="14" class="unit" text-anchor="middle">days</text>
   </g>
